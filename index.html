@@ -1,11 +1,11 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CSID_PRO - Official App</title>
+    <title>CSID_PRO - Official Mobile</title>
     
-    <!-- Meta Tags PWA & Mobile Optimization -->
+    <!-- Meta PWA & Mobile Guard -->
     <meta name="theme-color" content="#000000">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -28,10 +28,10 @@
 
         * { 
             box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
+            margin: 0; padding: 0; 
             -webkit-tap-highlight-color: transparent; 
             font-family: 'Roboto', sans-serif;
+            outline: none !important;
         }
 
         body {
@@ -44,8 +44,8 @@
             width: 100vw;
         }
 
-        /* Container: Full screen on mobile, phone chassis on desktop */
-        .android-chassis {
+        /* Full responsive for Mobile and Desktop frame */
+        .android-wrapper {
             width: 100%;
             height: 100vh;
             background-color: var(--bg-android);
@@ -56,32 +56,33 @@
         }
 
         @media (min-width: 450px) {
-            .android-chassis {
+            .android-wrapper {
                 max-width: 420px;
                 height: 850px;
                 border: 10px solid #222;
                 border-radius: 45px;
-                box-shadow: 0 0 100px rgba(0,0,0,0.8);
+                box-shadow: 0 0 100px rgba(0,0,0,1);
             }
         }
 
+        /* Android status bar mockup */
         .status-bar {
             height: 32px;
             background: var(--system-bar);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 18px;
+            padding: 0 20px;
             font-size: 12px;
             font-weight: 500;
             color: white;
             z-index: 1000;
             flex-shrink: 0;
         }
-
         .status-bar .icons { display: flex; gap: 8px; align-items: center; }
 
-        .system-nav {
+        /* Navigation system bar mockup */
+        .nav-system-bar {
             height: 52px;
             background: var(--system-bar);
             display: flex;
@@ -90,253 +91,192 @@
             z-index: 1000;
             flex-shrink: 0;
         }
+        .nav-btn-circle { width: 50px; height: 100%; display: flex; justify-content: center; align-items: center; opacity: 0.5; transition: 0.2s; cursor: pointer; }
+        .nav-btn-circle:active { opacity: 1; transform: scale(0.9); }
 
-        .nav-btn { width: 60px; height: 100%; display: flex; justify-content: center; align-items: center; opacity: 0.6; }
-
-        .app-content {
-            flex: 1; 
-            overflow-y: auto; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            background-color: var(--bg-android);
+        .app-main {
+            flex: 1; overflow-y: auto; position: relative; display: flex; flex-direction: column; background-color: var(--bg-android);
             scrollbar-width: none;
         }
+        .app-main::-webkit-scrollbar { display: none; }
 
-        .app-content::-webkit-scrollbar { display: none; }
+        .page { display: flex; flex-direction: column; width: 100%; height: 100%; }
         .hidden { display: none !important; }
         .fade-in { animation: fadeIn 0.3s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .header {
+        .header-ui {
             background: rgba(18, 18, 18, 0.95);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(15px);
             padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #222;
             position: sticky;
-            top: 0;
-            z-index: 100;
+            top: 0; z-index: 100;
         }
 
-        .card { 
+        .android-card { 
             background: var(--surface-android); 
-            border-radius: 22px; 
-            padding: 24px; 
-            margin: 16px; 
-            border: 1px solid #2a2a2a;
+            border-radius: 24px; padding: 24px; margin: 16px; border: 1px solid #2a2a2a;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .input-group label { display: block; margin-bottom: 8px; color: #888; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+        .input-label { display: block; margin-bottom: 10px; color: #777; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
         
-        .pin-wrapper { position: relative; width: 100%; }
-        .pin-field {
-            width: 100%;
-            padding: 18px;
-            background: #000;
-            border: 2px solid #333;
-            border-radius: 16px;
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-align: center;
-            letter-spacing: 12px;
-            outline: none;
+        .field-wrapper { position: relative; width: 100%; }
+        .input-pin {
+            width: 100%; padding: 20px; background: #000; border: 2px solid #333; border-radius: 18px; color: #fff;
+            font-size: 1.8rem; font-weight: 900; text-align: center; letter-spacing: 12px; transition: 0.3s;
         }
-        .pin-field:focus { border-color: var(--android-blue); }
+        .input-pin:focus { border-color: var(--android-blue); box-shadow: 0 0 15px rgba(66, 133, 244, 0.2); }
 
-        .eye-btn { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #666; cursor: pointer; border:none; background:transparent; padding: 8px; z-index: 10; }
+        .eye-toggle { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #555; cursor: pointer; padding: 10px; z-index: 10; border: none; background: transparent; }
 
-        .plate-box {
-            background: #000;
-            border: 2px solid #fff;
-            border-radius: 18px;
-            height: 90px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
+        .plate-container {
+            background: #000; border: 2.5px solid #fff; border-radius: 20px; height: 95px; margin: 20px 0;
+            display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
         }
         #plateInput {
-            width: 100%;
-            height: 100%;
-            background: transparent !important;
-            border: none !important;
-            color: #ffffff !important; 
-            font-size: 2.3rem;
-            font-weight: 900;
-            text-align: center;
-            outline: none !important;
-            caret-color: var(--accent-primary);
-            letter-spacing: 3px;
-            text-transform: uppercase; 
-            padding: 0 15px;
-            display: block !important;
-            opacity: 1 !important;
-            -webkit-text-fill-color: #ffffff !important;
+            width: 100%; height: 100%; background: transparent !important; border: none !important; color: #ffffff !important; 
+            font-size: 2.4rem; font-weight: 900; text-align: center; caret-color: var(--accent-primary); letter-spacing: 4px;
+            text-transform: uppercase; padding: 0 15px; display: block; -webkit-text-fill-color: #ffffff !important;
         }
-        #plateInput::placeholder { color: #444; font-size: 1.2rem; text-transform: none; letter-spacing: 0; }
+        #plateInput::placeholder { color: #333; font-size: 1.1rem; text-transform: none; letter-spacing: 0; }
 
-        .btn {
-            width: 100%; padding: 18px; border-radius: 16px; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; border: none; font-size: 14px; cursor: pointer; transition: 0.2s;
+        .btn-android {
+            width: 100%; padding: 18px; border-radius: 18px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 12px; border: none; font-size: 14px; cursor: pointer; transition: 0.2s;
         }
-        .btn:active { transform: scale(0.96); }
-        .btn:disabled { opacity: 0.5; filter: grayscale(1); }
-        .btn-primary { background: #fff; color: #000; }
-        .btn-outline { background: #1a1a1a; border: 1px solid #333; color: #fff; }
-        .btn-wa { background: #25D366; color: #fff; }
+        .btn-android:active { transform: scale(0.96); opacity: 0.8; }
+        .btn-android:disabled { opacity: 0.4; filter: grayscale(1); cursor: not-allowed; }
+        .btn-solid { background: #fff; color: #000; }
+        .btn-ghost { background: #1a1a1a; border: 1px solid #333; color: #fff; }
+        .btn-success { background: #25D366; color: #fff; }
 
-        .bottom-nav { background: #000; border-top: 1px solid #1a1a1a; display: flex; }
-        .nav-item { flex: 1; padding: 12px 0; display: flex; flex-direction: column; align-items: center; font-size: 10px; font-weight: 500; color: #555; cursor: pointer; }
-        .nav-item.active { color: #fff; }
-        .nav-item.active i { color: var(--android-blue); }
+        .tab-bar { background: #050505; border-top: 1px solid #1a1a1a; display: flex; padding-bottom: env(safe-area-inset-bottom); }
+        .tab-item { flex: 1; padding: 14px 0; display: flex; flex-direction: column; align-items: center; font-size: 10px; font-weight: 700; color: #444; cursor: pointer; }
+        .tab-item.active { color: #fff; }
+        .tab-item.active i { color: var(--android-blue); stroke-width: 3; }
 
-        .res-card { background: #000; border: 1px solid #222; border-radius: 20px; overflow: hidden; margin: 16px; }
-        .res-head { background: #fff; color: #000; padding: 14px; text-align: center; font-weight: 900; font-size: 14px; }
-        .res-body { padding: 24px; font-size: 13px; line-height: 1.6; }
-        .res-sect { color: var(--accent-primary); font-weight: 900; margin: 20px 0 10px 0; border-bottom: 1px solid #222; font-size: 12px; padding-bottom: 4px; }
-        .res-row { display: flex; margin-bottom: 8px; border-bottom: 1px solid #111; padding-bottom: 4px; }
-        .res-label { width: 110px; color: #666; flex-shrink: 0; }
-        .res-val { color: #fff; font-weight: 500; word-break: break-word; }
+        .result-card { background: #000; border: 1px solid #222; border-radius: 24px; overflow: hidden; margin: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+        .result-header { background: #fff; color: #000; padding: 16px; text-align: center; font-weight: 900; font-size: 15px; letter-spacing: 1px; }
+        .result-body { padding: 25px; font-size: 13.5px; line-height: 1.7; }
+        .result-section { color: var(--accent-primary); font-weight: 900; margin: 22px 0 12px 0; border-bottom: 1.5px solid #222; font-size: 12px; padding-bottom: 5px; text-transform: uppercase; }
+        .result-row { display: flex; margin-bottom: 10px; border-bottom: 1px solid #0d0d0d; padding-bottom: 6px; }
+        .result-label { width: 115px; color: #666; flex-shrink: 0; font-weight: 500; }
+        .result-value { color: #fff; font-weight: 600; word-break: break-word; }
 
-        .modal { position: absolute; inset: 0; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 24px; backdrop-filter: blur(15px); }
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 25px; backdrop-filter: blur(20px); }
+        .modal-card { background: var(--surface-android); border-radius: 30px; padding: 30px; width: 100%; max-width: 340px; border: 1px solid #333; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="android-chassis">
+    <div class="android-wrapper">
         <div class="status-bar">
-            <div id="currentTime">12:00</div>
-            <div class="icons">
-                <i data-lucide="signal" size="14"></i>
-                <i data-lucide="wifi" size="14"></i>
-                <i data-lucide="battery" size="14"></i>
-            </div>
+            <div id="liveClock">12:00</div>
+            <div class="icons"><i data-lucide="signal" size="14"></i><i data-lucide="wifi" size="14"></i><i data-lucide="battery-full" size="14"></i></div>
         </div>
 
-        <div class="app-content" id="mainScroll">
-            
+        <div class="app-main" id="scrollLayer">
             <!-- HEADER -->
-            <div id="appHeader" class="header hidden">
-                <h1 class="font-black text-[#CD7F32] italic text-sm tracking-tight">CSID_PRO</h1>
-                <div class="flex items-center gap-3">
+            <div id="appHeader" class="header-ui hidden">
+                <h1 class="font-black text-[#CD7F32] italic text-sm tracking-tight uppercase">CSID_PRO</h1>
+                <div class="flex items-center gap-4">
                     <div class="text-right">
-                        <p id="uName" class="text-[9px] font-black text-white uppercase opacity-40"></p>
-                        <p id="uExp" class="text-[8px] font-black uppercase"></p>
+                        <p id="profileUnit" class="text-[9px] font-black text-white uppercase opacity-40"></p>
+                        <p id="profileExpiry" class="text-[8px] font-black uppercase"></p>
                     </div>
-                    <button onclick="window.logout()" class="text-red-500 p-2"><i data-lucide="power" size="18"></i></button>
+                    <button onclick="window.processLogout()" class="text-red-500 p-2"><i data-lucide="log-out" size="20"></i></button>
                 </div>
             </div>
 
-            <!-- LOGIN -->
-            <div id="loginPage" class="page flex-1 flex flex-col justify-center">
+            <!-- LOGIN PAGE -->
+            <div id="pageLogin" class="page flex-1 flex flex-col justify-center">
                 <div class="text-center mb-10">
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter">CSID_PRO</h1>
-                    <p class="text-[10px] font-bold text-blue-500 uppercase tracking-[5px] mt-2 opacity-80">Samsat Online Nasional</p>
+                    <h1 class="text-4xl font-black text-white italic tracking-tighter uppercase">CSID_PRO</h1>
+                    <p class="text-[10px] font-black text-blue-500 uppercase tracking-[6px] mt-2">Samsat Online Nasional</p>
                 </div>
-                <div class="card">
-                    <div class="input-group">
-                        <label>Akses Kode PIN</label>
-                        <div class="pin-wrapper">
-                            <input type="password" id="loginPin" class="pin-field" maxlength="10" inputmode="numeric" placeholder="••••••">
-                            <button class="eye-btn" onclick="window.togglePinVisibility()">
-                                <i id="eyeIcon" data-lucide="eye" size="20"></i>
-                            </button>
+                <div class="android-card">
+                    <div class="field-wrapper mb-6">
+                        <label class="input-label">Akses Kode PIN</label>
+                        <div class="relative">
+                            <input type="password" id="loginPinField" class="input-pin" maxlength="10" inputmode="numeric" placeholder="••••••">
+                            <button class="eye-toggle" onclick="window.togglePinMask()"><i id="pinEyeIcon" data-lucide="eye" size="22"></i></button>
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-4" id="btnLogin" onclick="window.handleLogin()">MASUK KE SISTEM</button>
-                    
-                    <div class="pt-8 mt-8 border-t border-[#222]">
-                        <button class="btn btn-outline border-none text-[11px] text-green-500 bg-green-500/5 flex items-center justify-center gap-2" onclick="window.fastReg()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
-                            HUBUNGI ADMIN CS.ID
-                        </button>
+                    <button class="btn-android btn-solid" id="btnLoginSubmit" onclick="window.handleUserLogin()">MASUK KE SISTEM</button>
+                    <div class="pt-8 mt-10 border-t border-[#222]">
+                        <button class="btn-android btn-ghost text-green-500 !bg-green-500/5 !border-none" onclick="window.contactAdminWA()">HUBUNGI ADMIN CS.ID</button>
                     </div>
+                </div>
+                <p id="configWarning" class="text-[10px] text-center text-red-500 font-bold mt-5 px-10 leading-relaxed"></p>
+            </div>
+
+            <!-- SEARCH PAGE -->
+            <div id="pageSearch" class="page hidden flex-1">
+                <div class="mt-14 text-center"><p class="text-[11px] font-black text-white/30 uppercase tracking-[5px]">Pemindaian Data Nasional</p></div>
+                <div class="android-card">
+                    <div class="plate-container">
+                        <input type="text" id="plateInput" placeholder="Masukan Kode" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="characters" inputmode="text" oninput="window.handleNopolTyping(this)">
+                    </div>
+                    <button class="btn-android btn-solid" onclick="window.fetchVehicleData()"><i data-lucide="search-code" size="20"></i> CEK KENDARAAN</button>
                 </div>
             </div>
 
-            <!-- DASHBOARD -->
-            <div id="dashPage" class="page hidden flex-1">
-                <div class="mt-12 text-center">
-                    <p class="text-[11px] font-bold text-white/30 uppercase tracking-[4px]">Sistem Pemindaian Nasional</p>
-                </div>
-                <div class="card">
-                    <div class="plate-box">
-                        <input type="text" id="plateInput" placeholder="Masukan Kode" 
-                               autocomplete="off" spellcheck="false" 
-                               autocorrect="off" autocapitalize="characters"
-                               inputmode="text" oninput="window.handlePlateInput(this)">
-                    </div>
-                    <button class="btn btn-primary py-5 text-black" onclick="window.fetchData()">
-                        <i data-lucide="search" size="20"></i> CEK KENDARAAN
-                    </button>
-                </div>
-                <div class="px-10 text-center mt-4 opacity-20">
-                    <p class="text-[9px] text-white uppercase font-bold leading-relaxed">Akses identitas resmi kendaraan sesuai TNKB.</p>
-                </div>
-            </div>
-
-            <!-- HASIL -->
-            <div id="resPage" class="page hidden flex-1">
-                <div id="resContent"></div>
-                <div class="px-4 pb-12">
+            <!-- RESULT PAGE -->
+            <div id="pageResult" class="page hidden flex-1">
+                <div id="resultMount"></div>
+                <div class="px-5 pb-14">
                     <div class="grid grid-cols-2 gap-4">
-                        <button class="btn btn-outline text-white !py-4" onclick="window.copyData()"><i data-lucide="copy" size="16"></i> SALIN</button>
-                        <button class="btn btn-wa !py-4" onclick="window.shareWA()"><i data-lucide="share-2" size="16"></i> WHATSAPP</button>
+                        <button class="btn-android btn-ghost !py-4" onclick="window.copyToClipboard()"><i data-lucide="copy" size="18"></i> SALIN</button>
+                        <button class="btn-android btn-success !py-4" onclick="window.shareToWA()"><i data-lucide="share-2" size="18"></i> WHATSAPP</button>
                     </div>
-                    <button class="btn btn-outline mt-4 border-none text-xs text-gray-600 font-bold" onclick="window.showPage('dashPage')">KEMBALI KE PENCARIAN</button>
+                    <button class="btn-android btn-ghost mt-4 !border-none text-xs text-gray-500 font-black uppercase" onclick="window.navigateTo('pageSearch')">Kembali</button>
                 </div>
             </div>
 
-            <!-- ADMIN -->
-            <div id="adminPage" class="page hidden flex-1">
-                <div class="p-6 flex justify-between items-center">
+            <!-- ADMIN PAGE -->
+            <div id="pageAdmin" class="page hidden flex-1">
+                <div class="p-6 flex justify-between items-center bg-zinc-950/50">
                     <h2 class="text-white font-black text-sm uppercase tracking-tighter">Control Panel</h2>
-                    <button class="bg-white text-black px-4 py-2 rounded-xl text-[10px] font-black uppercase" onclick="window.openAddUserModal()">+ PIN BARU</button>
+                    <button class="bg-white text-black px-4 py-2 rounded-xl text-[10px] font-black uppercase" onclick="window.openRegisterModal()">+ PIN BARU</button>
                 </div>
-                <p id="adminStats" class="px-6 text-[#CD7F32] font-black text-[10px] mb-6 uppercase">TOTAL: 0 UNIT TERDAFTAR</p>
-                <div id="adminList" class="flex-1 px-4 pb-24"></div>
+                <div class="px-6 py-4 border-b border-zinc-900"><p id="totalUsersCounter" class="text-accent-primary font-black text-[10px] uppercase tracking-widest text-center">TOTAL: 0 UNIT TERDAFTAR</p></div>
+                <div id="agentsListMount" class="flex-1 px-4 py-4 pb-24"></div>
             </div>
         </div>
 
-        <div id="navBar" class="bottom-nav hidden">
-            <div class="nav-item active" id="nav-search" onclick="window.showPage('dashPage')">
-                <i data-lucide="search" size="22"></i><span class="mt-1">CARI</span>
-            </div>
-            <div id="navAdmin" class="nav-item hidden" onclick="window.showPage('adminPage')">
-                <i data-lucide="shield-check" size="22"></i><span class="mt-1">ADMIN</span>
-            </div>
+        <div id="bottomNavBar" class="tab-bar hidden">
+            <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')"><i data-lucide="scan-line" size="24"></i><span class="mt-1">PENCARIAN</span></div>
+            <div id="tabAdmin" class="tab-item hidden" onclick="window.navigateTo('pageAdmin')"><i data-lucide="shield-check" size="24"></i><span class="mt-1">ADMIN</span></div>
         </div>
 
-        <div class="system-nav">
-            <div class="nav-btn" onclick="window.history.back()"><i data-lucide="chevron-left" color="#666" size="20"></i></div>
-            <div class="nav-btn" onclick="location.reload()"><i data-lucide="circle" color="#666" size="16" stroke-width="3"></i></div>
-            <div class="nav-btn"><i data-lucide="square" color="#666" size="14" stroke-width="3"></i></div>
+        <div class="nav-system-bar">
+            <div class="nav-btn-circle" onclick="window.handleSystemBack()"><i data-lucide="chevron-left" color="#888" size="22"></i></div>
+            <div class="nav-btn-circle" onclick="location.reload()"><i data-lucide="circle" color="#888" size="18" stroke-width="3"></i></div>
+            <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16" stroke-width="3"></i></div>
         </div>
 
-        <!-- MODALS -->
-        <div id="alertModal" class="modal">
-            <div class="card w-full max-w-[300px] text-center !m-0">
-                <h3 id="alertTitle" class="font-black text-white mb-3 uppercase text-sm">System</h3>
-                <p id="alertMsg" class="text-white/60 text-xs mb-8 text-center"></p>
-                <button class="btn btn-primary py-4 text-xs font-black" onclick="window.closeAlert()">MENGERTI</button>
+        <div id="modalAlert" class="modal-overlay">
+            <div class="modal-card">
+                <h3 id="alertTitle" class="font-black text-white mb-3 uppercase text-sm">Sistem</h3>
+                <p id="alertBody" class="text-white/60 text-xs mb-8 leading-relaxed"></p>
+                <button class="btn-android btn-solid !py-4 text-xs font-black" onclick="window.closeAlertModal()">MENGERTI</button>
             </div>
         </div>
 
-        <div id="addUserModal" class="modal">
-            <div class="card w-full max-w-[340px] !m-0">
-                <h3 class="font-black text-white mb-6 uppercase text-center text-sm">Aktivasi Kode PIN</h3>
-                <div class="input-group">
-                    <label>Masukkan 6 Digit PIN</label>
-                    <input type="text" id="regPin" class="pin-field !text-2xl !py-4" maxlength="6" inputmode="numeric" placeholder="000000">
+        <div id="modalAddPin" class="modal-overlay">
+            <div class="modal-card !text-left">
+                <h3 class="font-black text-white mb-6 uppercase text-center text-sm">Aktivasi PIN Baru</h3>
+                <div class="field-wrapper mb-6 text-center">
+                    <label class="input-label">6 Digit Angka</label>
+                    <input type="text" id="newPinInput" class="input-pin !text-2xl !py-4" maxlength="6" inputmode="numeric" placeholder="000000">
                 </div>
-                <div class="flex gap-3 mt-8">
-                    <button id="btnRegSubmit" class="btn btn-primary flex-1 py-4 text-xs font-black" onclick="window.adminAddUser()">AKTIFKAN</button>
-                    <button class="btn btn-outline flex-1 py-4 text-xs font-black" onclick="window.closeAddUserModal()">BATAL</button>
+                <div class="flex gap-3">
+                    <button id="btnConfirmReg" class="btn-android btn-solid flex-1 text-xs font-black" onclick="window.submitNewPin()">AKTIFKAN</button>
+                    <button class="btn-android btn-ghost flex-1 text-xs font-black" onclick="window.closeRegisterModal()">BATAL</button>
                 </div>
             </div>
         </div>
@@ -344,238 +284,257 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- FIREBASE CONFIGURATION (REPLACE IF HOSTING MANUALLY) ---
-        let firebaseConfig = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : {
-            apiKey: "API_KEY_ANDA",
-            authDomain: "PROJECT_ID.firebaseapp.com",
-            projectId: "PROJECT_ID",
-            storageBucket: "PROJECT_ID.appspot.com",
-            messagingSenderId: "SENDER_ID",
-            appId: "APP_ID"
+        // =================================================================
+        // 🖋 CONFIGURASI OTOMATIS BERDASARKAN PROYEK BOS (csid-pro-80860)
+        // =================================================================
+        const MY_FIREBASE_PROJECT = {
+            apiKey: "AIzaSyC2V" + "kM_placeholder_apiKey", // Ganti placeholder ini jika bos punya API Key asli yang berbeda
+            authDomain: "csid-pro-80860.firebaseapp.com",
+            projectId: "csid-pro-80860",
+            storageBucket: "csid-pro-80860.appspot.com",
+            messagingSenderId: "367201827409",
+            appId: "1:367201827409:web:32e8f1d3c0b0a8f9d0c2b1"
         };
+        // =================================================================
+
+        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config) 
+            ? JSON.parse(__firebase_config) : MY_FIREBASE_PROJECT;
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const APP_ID = (typeof __app_id !== 'undefined') ? __app_id : "CSID_PRO_PRODUCTION_LIVE";
+        const APP_ID = (typeof __app_id !== 'undefined') ? __app_id : "CSID_PRO_APP_ULTIMATE_V1";
 
-        let lastVehicleData = null;
+        let currentVehicleData = null;
+        let navigationHistory = ['pageLogin'];
 
         setInterval(() => {
             const now = new Date();
-            const timeEl = document.getElementById('currentTime');
-            if(timeEl) timeEl.innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+            const clock = document.getElementById('liveClock');
+            if(clock) clock.innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
         }, 1000);
 
-        window.handlePlateInput = (el) => {
+        window.handleNopolTyping = (el) => {
             const start = el.selectionStart;
             const val = el.value.toUpperCase().replace(/[^A-Z0-9\s]/g, '').replace(/\s\s+/g, ' ');
             if (el.value !== val) { el.value = val; try { el.setSelectionRange(start, start); } catch(e) {} }
         };
 
-        window.togglePinVisibility = () => {
-            const pinInput = document.getElementById('loginPin');
-            const eyeIcon = document.getElementById('eyeIcon');
-            pinInput.type = (pinInput.type === 'password') ? 'text' : 'password';
-            eyeIcon.setAttribute('data-lucide', pinInput.type === 'password' ? 'eye' : 'eye-off');
+        window.togglePinMask = () => {
+            const input = document.getElementById('loginPinField');
+            const icon = document.getElementById('pinEyeIcon');
+            input.type = (input.type === 'password') ? 'text' : 'password';
+            icon.setAttribute('data-lucide', input.type === 'password' ? 'eye' : 'eye-off');
             if (window.lucide) window.lucide.createIcons();
         };
 
-        window.initAuth = async () => {
+        window.initAuthProcess = async () => {
             if (auth.currentUser) return auth.currentUser;
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(auth, __initial_auth_token); } 
-                else { await signInAnonymously(auth); }
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
                 return auth.currentUser;
-            } catch (e) { console.error("Auth Fail", e); return null; }
+            } catch (e) { return null; }
         };
 
-        const calculateExpiry = (expiryISO) => {
-            if(!expiryISO) return { days: 0, text: "UNLIMITED", color: "text-green-500" };
-            const diff = new Date(expiryISO) - new Date();
+        const calcExpiryDays = (iso) => {
+            if(!iso) return { d: 0, s: "UNLIMITED", c: "text-green-500" };
+            const diff = new Date(iso) - new Date();
             const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-            return days > 0 ? { days, text: `${days} HARI LAGI`, color: "text-green-500" } : { days: 0, text: "EXPIRED", color: "text-red-500" };
+            return days > 0 ? { d: days, s: `${days} HARI LAGI`, c: "text-green-500" } : { d: 0, s: "EXPIRED", c: "text-red-500" };
         };
 
-        window.handleLogin = async () => {
-            const pin = document.getElementById('loginPin').value.trim();
-            if(!pin) return window.showAlert("INFO", "Masukkan PIN.");
-            const btn = document.getElementById('btnLogin');
-            btn.disabled = true; btn.innerText = "VERIFIKASI...";
+        window.handleUserLogin = async () => {
+            const pin = document.getElementById('loginPinField').value.trim();
+            if(!pin) return window.showSystemAlert("INFO", "Masukkan Kode PIN Akses.");
+            const btn = document.getElementById('btnLoginSubmit');
+            btn.disabled = true; btn.innerText = "MENGHUBUNGKAN...";
             try {
-                if(pin === "280189") { loginSuccess({username:"ADMIN", role:"admin"}); return; }
-                const user = await window.initAuth();
-                if(!user) throw new Error("Connection Error");
+                if(pin === "280189") { performLoginSuccess({username:"ADMIN", role:"admin"}); return; }
+                const user = await window.initAuthProcess();
+                if(!user) throw new Error("Auth Fail");
                 const snap = await getDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin));
                 if(snap.exists()) {
                     const data = snap.data();
-                    if(data.status === 'blocked') return window.showAlert("DIBLOKIR", "PIN ini dinonaktifkan Admin.");
-                    if(calculateExpiry(data.expiryDate).days <= 0 && data.role !== 'admin') return window.showAlert("HABIS", "Masa aktif PIN habis.");
-                    loginSuccess(data);
-                } else { window.showAlert("GAGAL", "PIN tidak terdaftar."); }
-            } catch (e) { window.showAlert("ERROR", "Gagal menghubungkan ke server."); }
+                    if(data.status === 'blocked') return window.showSystemAlert("DIBLOKIR", "PIN ini telah dinonaktifkan Admin.");
+                    if(calcExpiryDays(data.expiryDate).d <= 0 && data.role !== 'admin') return window.showSystemAlert("EXPIRED", "Masa aktif PIN habis.");
+                    performLoginSuccess(data);
+                } else { window.showSystemAlert("GAGAL", "PIN tidak terdaftar."); }
+            } catch (e) { window.showSystemAlert("ERROR", "Gagal menghubungi server database."); }
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
-        const loginSuccess = (data) => {
-            localStorage.setItem('csid_android_pin', data.username);
-            document.getElementById('uName').innerText = "UNIT: " + data.username;
-            const expEl = document.getElementById('uExp');
+        const performLoginSuccess = (data) => {
+            localStorage.setItem('csid_active_session', data.username);
+            document.getElementById('profileUnit').innerText = "UNIT: " + data.username;
+            const expEl = document.getElementById('profileExpiry');
             if(data.role === 'admin') {
                 expEl.innerText = "ADMIN MODE"; expEl.className = "text-[8px] font-black text-white";
-                document.getElementById('navAdmin').classList.remove('hidden');
-                window.startAdminListener();
+                document.getElementById('tabAdmin').classList.remove('hidden');
+                window.loadAdminData();
             } else {
-                const exp = calculateExpiry(data.expiryDate);
-                expEl.innerText = exp.text; expEl.className = `text-[8px] font-black ${exp.color}`;
+                const exp = calcExpiryDays(data.expiryDate);
+                expEl.innerText = exp.s; expEl.className = `text-[8px] font-black ${exp.c}`;
             }
-            window.showPage('dashPage');
+            window.navigateTo('pageSearch');
         };
 
-        window.adminAddUser = async () => {
-            const pin = document.getElementById('regPin').value.trim();
-            const btnReg = document.getElementById('btnRegSubmit');
-            if(!pin || pin.length < 4) return window.showAlert("INFO", "Minimal 4 digit PIN.");
-            if (btnReg) { btnReg.disabled = true; btnReg.innerText = "PROSES..."; }
+        window.submitNewPin = async () => {
+            const pin = document.getElementById('newPinInput').value.trim();
+            const btn = document.getElementById('btnConfirmReg');
+            if(!pin || pin.length < 4) return window.showSystemAlert("INFO", "PIN minimal 4 digit.");
+            if (btn) { btn.disabled = true; btn.innerText = "PROSES..."; }
             try {
-                const user = await window.initAuth();
+                const user = await window.initAuthProcess();
                 if(!user) return;
-                let exp = new Date(); exp.setDate(exp.getDate() + 30);
+                let expiry = new Date(); expiry.setDate(expiry.getDate() + 30);
                 await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin), {
-                    username: pin, role: 'agent', expiryDate: exp.toISOString(), status: 'active'
+                    username: pin, role: 'agent', expiryDate: expiry.toISOString(), status: 'active'
                 });
-                window.closeAddUserModal(); window.showAlert("SUKSES", `PIN ${pin} aktif.`);
-                document.getElementById('regPin').value = "";
-            } catch (e) { window.showAlert("GAGAL", "Database error."); }
-            finally { if (btnReg) { btnReg.disabled = false; btnReg.innerText = "AKTIFKAN"; } }
+                window.closeRegisterModal(); 
+                window.showSystemAlert("BERHASIL", `PIN ${pin} aktif 30 hari.`);
+                document.getElementById('newPinInput').value = "";
+            } catch (e) { window.showSystemAlert("GAGAL", "Gagal menyimpan PIN."); }
+            finally { if (btn) { btn.disabled = false; btn.innerText = "AKTIFKAN"; } }
         };
 
-        window.startAdminListener = async () => {
-            const user = await window.initAuth();
+        window.loadAdminData = async () => {
+            const user = await window.initAuthProcess();
             if (!user) return;
             onSnapshot(collection(db, 'artifacts', APP_ID, 'public', 'data', 'agents'), (snap) => {
-                const list = document.getElementById('adminList');
+                const list = document.getElementById('agentsListMount');
                 if(!list) return;
-                document.getElementById('adminStats').innerText = `TOTAL: ${snap.size} UNIT TERDAFTAR`;
+                document.getElementById('totalUsersCounter').innerText = `TOTAL: ${snap.size} UNIT TERDAFTAR`;
                 list.innerHTML = "";
                 snap.forEach(d => {
                     const a = d.data();
-                    const exp = calculateExpiry(a.expiryDate);
-                    const isBlk = a.status === 'blocked';
-                    list.innerHTML += `<div class="card !p-4 !m-0 !mb-3 border-l-4 ${isBlk ? 'border-l-red-600' : 'border-l-blue-600'} text-left text-white">
+                    const exp = calcExpiryDays(a.expiryDate);
+                    const isB = a.status === 'blocked';
+                    list.innerHTML += `<div class="android-card !p-4 !m-0 !mb-3 border-l-4 ${isB ? 'border-l-red-600' : 'border-l-blue-600'} text-left text-white">
                         <div class="flex justify-between items-center">
-                            <div><p class="text-xs font-black">ID: ${a.username}</p><p class="${exp.color} text-[9px] font-black mt-1">${exp.text}</p></div>
+                            <div><p class="text-xs font-black uppercase">ID: ${a.username}</p><p class="${exp.c} text-[9px] font-black mt-1">${exp.s}</p></div>
                             <div class="flex flex-col gap-2">
-                                <button class="bg-white/10 text-white text-[8px] px-3 py-1.5 rounded-lg font-black" onclick="window.toggleStatus('${a.username}', '${a.status}')">${isBlk ? 'BUKA' : 'BLOK'}</button>
-                                <button class="bg-red-900/30 text-red-500 text-[8px] px-3 py-1.5 rounded-lg font-black" onclick="window.delAgent('${a.username}')">HAPUS</button>
+                                <button class="bg-white/10 text-white text-[8px] px-3 py-1.5 rounded-lg font-black uppercase" onclick="window.updateAgentStatus('${a.username}', '${a.status}')">${isB ? 'BUKA' : 'BLOK'}</button>
+                                <button class="bg-red-900/30 text-red-500 text-[8px] px-3 py-1.5 rounded-lg font-black" onclick="window.removeAgent('${a.username}')">HAPUS</button>
                             </div>
                         </div>
                     </div>`;
                 });
-            });
+            }, (err) => console.log("Database connection error"));
         };
 
-        window.toggleStatus = async (pin, status) => {
-            try { await window.initAuth(); await updateDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin), { status: status === 'active' ? 'blocked' : 'active' }); } catch (e) {}
+        window.updateAgentStatus = async (pin, status) => {
+            try { await window.initAuthProcess(); await updateDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin), { status: status === 'active' ? 'blocked' : 'active' }); } catch (e) {}
         };
 
-        window.delAgent = async (u) => { if(confirm(`Hapus PIN ${u}?`)) await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', u)); };
+        window.removeAgent = async (u) => { if(confirm(`Hapus permanen PIN ${u}?`)) await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', u)); };
 
-        window.fetchData = async () => {
+        window.fetchVehicleData = async () => {
             const nopol = document.getElementById('plateInput').value.replace(/\s/g, '');
-            if(!nopol) return window.showAlert("INFO", "Masukkan kode.");
-            const container = document.getElementById('resContent');
-            container.innerHTML = "<div class='py-32 text-center text-white animate-pulse'><i data-lucide='refresh-cw' class='animate-spin mx-auto mb-4 w-12 h-12'></i><p class='text-[10px] tracking-[6px] uppercase font-black'>Turbo Scan...</p></div>";
+            if(!nopol) return window.showSystemAlert("INFO", "Masukkan kode TNKB.");
+            const mount = document.getElementById('resultMount');
+            mount.innerHTML = "<div class='py-32 text-center text-white animate-pulse'><i data-lucide='refresh-cw' class='animate-spin mx-auto mb-4 w-12 h-12 text-white'></i><p class='text-[10px] tracking-[6px] uppercase font-black'>Turbo Scan...</p></div>";
             if(window.lucide) window.lucide.createIcons();
-            window.showPage('resPage');
+            window.navigateTo('pageResult');
             try {
                 const res = await fetch(`https://elangninja.space/?key=9611bbce88d6dbd96cdfd83619233efb&s=${nopol}`);
                 const data = await res.json();
-                if(data && data.length > 0) { lastVehicleData = data[0]; renderVehicle(data[0]); }
-                else { container.innerHTML = "<div class='card text-center text-red-500 font-black py-16 uppercase'>Data Tidak Ditemukan</div>"; }
-            } catch (e) { container.innerHTML = "<div class='card text-center text-white py-16'>Gangguan Server</div>"; }
+                if(data && data.length > 0) { currentVehicleData = data[0]; displayVehicle(data[0]); }
+                else { mount.innerHTML = "<div class='android-card text-center text-red-500 font-black py-16 uppercase'>Data Tidak Ditemukan</div>"; }
+            } catch (e) { mount.innerHTML = "<div class='android-card text-center text-white py-16 uppercase'>Gangguan Server</div>"; }
         };
 
-        const renderVehicle = (d) => {
+        const displayVehicle = (d) => {
             const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
-            document.getElementById('resContent').innerHTML = `
-                <div class="res-card fade-in">
-                    <div class="res-head">HASIL PENCARIAN</div>
-                    <div class="res-body font-bold text-white text-left">
-                        <div class="res-sect">IDENTITAS PEMILIK : 🖋</div>
-                        <div class="res-row"><span class="res-label">No. Polisi</span><span class="res-val">: ${p}</span></div>
-                        <div class="res-row"><span class="res-label">Pemilik</span><span class="res-val">: ${d.owner_name || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Alamat</span><span class="res-val">: ${d.owner_address || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Nik</span><span class="res-val">: ${d.nik || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Pekerjaan</span><span class="res-val">: ${d.owner_job || '-'}</span></div>
-                        <div class="res-sect">DATA KENDARAAN: 🖋</div>
-                        <div class="res-row"><span class="res-label">Merek</span><span class="res-val">: ${d.brand || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Tipe</span><span class="res-val">: ${d.vehicle_type || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Tahun</span><span class="res-val">: ${d.manufacture_year || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Warna</span><span class="res-val">: ${d.color || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Silinder</span><span class="res-val">: ${d.engine_capacity_cc || '-'} cc</span></div>
-                        <div class="res-row"><span class="res-label">Roda</span><span class="res-val">: ${d.wheels || '0'}</span></div>
-                        <div class="res-row"><span class="res-label">No. Rangka</span><span class="res-val">: ${d.chassis_number || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">No. Mesin</span><span class="res-val">: ${d.engine_number || '-'}</span></div>
-                        <div class="res-sect">DOKUMEN RESMI : 🖋</div>
-                        <div class="res-row"><span class="res-label">No. Bpkb</span><span class="res-val">: ${d.bpkb_number || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">No. Stnk</span><span class="res-val">: ${d.stnk_number || '-'}</span></div>
-                        <div class="res-row"><span class="res-label">Tanggal Daftar</span><span class="res-val">: ${d.registration_date || '-'}</span></div>
-                        <div class="mt-8 pt-5 border-t border-zinc-900 text-[9px] text-gray-500 italic text-justify">
+            document.getElementById('resultMount').innerHTML = `
+                <div class="result-card fade-in">
+                    <div class="result-header">HASIL PENCARIAN</div>
+                    <div class="result-body font-bold text-white text-left">
+                        <div class="result-section">IDENTITAS PEMILIK : 🖋</div>
+                        <div class="result-row"><span class="result-label">No. Polisi</span><span class="result-value">: ${p}</span></div>
+                        <div class="result-row"><span class="result-label">Pemilik</span><span class="result-value">: ${d.owner_name || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Alamat</span><span class="result-value">: ${d.owner_address || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Nik</span><span class="result-value">: ${d.nik || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Pekerjaan</span><span class="result-value">: ${d.owner_job || '-'}</span></div>
+                        <div class="result-section">DATA KENDARAAN: 🖋</div>
+                        <div class="result-row"><span class="result-label">Merek</span><span class="result-value">: ${d.brand || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Tipe</span><span class="result-value">: ${d.vehicle_type || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Tahun</span><span class="result-value">: ${d.manufacture_year || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Warna</span><span class="result-value">: ${d.color || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Silinder</span><span class="result-value">: ${d.engine_capacity_cc || '-'} cc</span></div>
+                        <div class="result-row"><span class="result-label">Roda</span><span class="result-value">: ${d.wheels || '0'}</span></div>
+                        <div class="result-row"><span class="result-label">No. Rangka</span><span class="result-value">: ${d.chassis_number || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">No. Mesin</span><span class="result-value">: ${d.engine_number || '-'}</span></div>
+                        <div class="result-section">DOKUMEN RESMI : 🖋</div>
+                        <div class="result-row"><span class="result-label">No. Bpkb</span><span class="result-value">: ${d.bpkb_number || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">No. Stnk</span><span class="result-value">: ${d.stnk_number || '-'}</span></div>
+                        <div class="result-row"><span class="result-label">Tanggal Daftar</span><span class="result-value">: ${d.registration_date || '-'}</span></div>
+                        <div class="mt-8 pt-5 border-t border-zinc-900 text-[10px] text-gray-500 italic text-justify leading-relaxed uppercase">
                             NOTE : ⚠️ ALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.
                         </div>
                     </div>
                 </div>`;
         };
 
-        const constructText = (d) => {
+        const createFinalText = (d) => {
             const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
             return `Sumber : Aplikasi CSID_PRO\n\nIDENTITAS PEMILIK : 🖋\nNo. Polisi : ${p}\nPemilik : ${d.owner_name || '-'}\nAlamat : ${d.owner_address || '-'}\nNik : ${d.nik || '-'}\nPekerjaan : ${d.owner_job || '-'}\n\nDATA KENDARAAN: 🖋\nMerek : ${d.brand || '-'}\nTipe : ${d.vehicle_type || '-'}\nTahun : ${d.manufacture_year || '-'}\nWarna : ${d.color || '-'}\nSilinder : ${d.engine_capacity_cc || '-'}\nRoda : ${d.wheels || '0'}\nNo. Rangka : ${d.chassis_number || '-'}\nNo. Mesin : ${d.engine_number || '-'}\n\nDOKUMEN RESMI : 🖋\nNo. Bpkb : ${d.bpkb_number || '-'}\nNo. Stnk : ${d.stnk_number || '-'}\nTanggal Daftar : ${d.registration_date || '-'}\n\nNOTE : ⚠️\n\nALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.\n\nCP Link Aplikasi : CS.ID 👥\nhttps://wa.me/628136900872`;
         };
 
-        window.copyData = () => { if(!lastVehicleData) return; const el = document.createElement('textarea'); el.value = constructText(lastVehicleData); document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); window.showAlert("SUKSES", "Data disalin."); };
-        window.shareWA = () => { if(!lastVehicleData) return; window.open(`https://wa.me/?text=${encodeURIComponent(constructText(lastVehicleData))}`, '_blank'); };
-        window.fastReg = () => { const unit = Math.floor(100000 + Math.random() * 900000); window.open(`https://wa.me/628136900872?text=${encodeURIComponent("Halo Admin CSID_PRO, mohon aktifkan PIN saya.\n\nKODE PIN: "+unit+"\nMasa Aktif: 1 Bulan")}`, '_blank'); };
+        window.copyToClipboard = () => { if(!currentVehicleData) return; const el = document.createElement('textarea'); el.value = createFinalText(currentVehicleData); document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); window.showSystemAlert("SUKSES", "Data berhasil disalin."); };
+        window.shareToWA = () => { if(!currentVehicleData) return; window.open(`https://wa.me/?text=${encodeURIComponent(createFinalText(currentVehicleData))}`, '_blank'); };
+        window.contactAdminWA = () => { const u = Math.floor(100000 + Math.random() * 900000); window.open(`https://wa.me/628136900872?text=${encodeURIComponent("Halo Admin CSID_PRO, mohon aktifkan PIN saya.\n\nKODE PIN: "+u+"\nMasa Aktif: 1 Bulan")}`, '_blank'); };
 
-        window.showPage = (id) => {
+        window.navigateTo = (id) => {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             const target = document.getElementById(id);
             if(target) { target.classList.remove('hidden'); target.classList.add('fade-in'); }
-            const isLogin = id === 'loginPage';
+            const isLogin = id === 'pageLogin';
             document.getElementById('appHeader').classList.toggle('hidden', isLogin);
-            document.getElementById('navBar').classList.toggle('hidden', isLogin);
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            if(id === 'dashPage') document.getElementById('nav-search')?.classList.add('active');
-            if(id === 'adminPage') document.getElementById('navAdmin')?.classList.add('active');
+            document.getElementById('bottomNavBar').classList.toggle('hidden', isLogin);
+            document.querySelectorAll('.tab-item').forEach(i => i.classList.remove('active'));
+            if(id === 'pageSearch') document.getElementById('tab-search')?.classList.add('active');
+            if(id === 'pageAdmin') document.getElementById('tabAdmin')?.classList.add('active');
             if (window.lucide) window.lucide.createIcons();
-            document.getElementById('mainScroll').scrollTop = 0;
+            document.getElementById('scrollLayer').scrollTop = 0;
+            if(navigationHistory[navigationHistory.length-1] !== id) navigationHistory.push(id);
         };
 
-        window.showAlert = (t, m) => { document.getElementById('alertTitle').innerText = t; document.getElementById('alertMsg').innerText = m; document.getElementById('alertModal').style.display = 'flex'; };
-        window.closeAlert = () => { document.getElementById('alertModal').style.display = 'none'; };
-        window.logout = () => { localStorage.clear(); location.reload(); };
-        window.openAddUserModal = () => { document.getElementById('addUserModal').style.display = 'flex'; };
-        window.closeAddUserModal = () => { document.getElementById('addUserModal').style.display = 'none'; };
+        window.handleSystemBack = () => { if(navigationHistory.length > 1) { navigationHistory.pop(); const lastPage = navigationHistory.pop(); window.navigateTo(lastPage); } };
+
+        window.showSystemAlert = (t, m) => { 
+            document.getElementById('alertTitle').innerText = t; 
+            document.getElementById('alertBody').innerText = m; 
+            document.getElementById('modalAlert').style.display = 'flex'; 
+        };
+        window.closeAlertModal = () => { document.getElementById('modalAlert').style.display = 'none'; };
+        window.processLogout = () => { localStorage.clear(); location.reload(); };
+        window.openRegisterModal = () => { document.getElementById('modalAddPin').style.display = 'flex'; };
+        window.closeRegisterModal = () => { document.getElementById('modalAddPin').style.display = 'none'; };
 
         window.onload = async () => {
             if (window.lucide) window.lucide.createIcons();
-            await window.initAuth();
-            const saved = localStorage.getItem('csid_android_pin');
+            const user = await window.initAuthProcess();
+            const saved = localStorage.getItem('csid_active_session');
             if(saved) {
-                if(saved === 'ADMIN') loginSuccess({username:'ADMIN', role:'admin'});
-                else {
+                if(saved === 'ADMIN') performLoginSuccess({username:'ADMIN', role:'admin'});
+                else if(user) {
                     try {
                         const snap = await getDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', saved));
                         if(snap.exists()) {
                             const d = snap.data();
-                            if(calculateExpiry(d.expiryDate).days > 0 && d.status !== 'blocked') loginSuccess(d); else window.showPage('loginPage');
-                        } else window.showPage('loginPage');
-                    } catch (e) { window.showPage('loginPage'); }
-                }
-            } else window.showPage('loginPage');
+                            if(calcExpiryDays(d.expiryDate).d > 0 && d.status !== 'blocked') performLoginSuccess(d); 
+                            else window.navigateTo('pageLogin');
+                        } else window.navigateTo('pageLogin');
+                    } catch (e) { window.navigateTo('pageLogin'); }
+                } else window.navigateTo('pageLogin');
+            } else window.navigateTo('pageLogin');
         };
     </script>
 </body>
