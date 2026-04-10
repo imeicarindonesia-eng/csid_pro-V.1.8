@@ -44,7 +44,7 @@
             width: 100vw;
         }
 
-        /* Full Screen UI */
+        /* Full Screen UI - No Status Bar */
         .android-wrapper {
             width: 100%;
             height: 100vh;
@@ -158,8 +158,6 @@
 <body>
 
     <div class="android-wrapper">
-        <!-- Status Bar Dibuang Agar Tampilan Bersih (Jam & Baterai Hilang) -->
-
         <div class="app-main" id="scrollLayer">
             <!-- HEADER APP -->
             <div id="appHeader" class="header-ui hidden">
@@ -167,13 +165,13 @@
                 <div class="flex items-center gap-4">
                     <div class="text-right">
                         <p id="profileUnit" class="text-[9px] font-black text-white uppercase opacity-40"></p>
-                        <p id="profileExpiry" class="text-[8px] font-black uppercase text-green-500">SISTEM ONLINE</p>
+                        <p id="profileExpiry" class="text-[8px] font-black uppercase text-green-500 font-black">SISTEM ONLINE</p>
                     </div>
                     <button onclick="window.processLogout()" class="text-red-500 p-2"><i data-lucide="log-out" size="22"></i></button>
                 </div>
             </div>
 
-            <!-- HALAMAN LOGIN -->
+            <!-- LOGIN PAGE -->
             <div id="pageLogin" class="page flex-1 flex flex-col justify-center">
                 <div class="text-center mb-10">
                     <h1 class="text-5xl font-black text-white italic tracking-tighter uppercase">CSID_PRO</h1>
@@ -194,7 +192,7 @@
                 <p id="statusServer" class="text-[10px] text-center text-gray-500 font-bold mt-5 px-10 leading-relaxed"></p>
             </div>
 
-            <!-- HALAMAN PENCARIAN -->
+            <!-- SEARCH PAGE -->
             <div id="pageSearch" class="page hidden flex-1">
                 <div class="mt-14 text-center"><p class="text-[11px] font-black text-white/30 uppercase tracking-[5px]">Pemindaian Data Nasional</p></div>
                 <div class="android-card">
@@ -207,7 +205,7 @@
                 </div>
             </div>
 
-            <!-- HALAMAN HASIL -->
+            <!-- RESULT PAGE -->
             <div id="pageResult" class="page hidden flex-1">
                 <div id="resultMount"></div>
                 <div class="px-5 pb-14">
@@ -215,7 +213,7 @@
                 </div>
             </div>
 
-            <!-- HALAMAN ADMIN -->
+            <!-- ADMIN PAGE -->
             <div id="pageAdmin" class="page hidden flex-1">
                 <div class="p-6 flex justify-between items-center bg-zinc-950/50">
                     <h2 class="text-white font-black text-sm uppercase tracking-tighter">Control Panel</h2>
@@ -226,21 +224,15 @@
             </div>
         </div>
 
-        <!-- TAB BAR BAWAH -->
         <div id="bottomNavBar" class="tab-bar hidden">
-            <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')">
-                <i data-lucide="scan-line" size="24"></i><span class="mt-1">PENCARIAN</span>
-            </div>
-            <div id="tabAdmin" class="tab-item hidden" onclick="window.navigateTo('pageAdmin')">
-                <i data-lucide="shield-check" size="24"></i><span class="mt-1">ADMIN</span>
-            </div>
+            <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')"><i data-lucide="scan-line" size="24"></i><span class="mt-1">PENCARIAN</span></div>
+            <div id="tabAdmin" class="tab-item hidden" onclick="window.navigateTo('pageAdmin')"><i data-lucide="shield-check" size="24"></i><span class="mt-1">ADMIN</span></div>
         </div>
 
-        <!-- NAVIGASI SISTEM ANDROID -->
         <div class="nav-system-bar">
             <div class="nav-btn-circle" onclick="window.handleSystemBack()"><i data-lucide="chevron-left" color="#888" size="22"></i></div>
-            <div class="nav-btn-circle" onclick="location.reload()"><i data-lucide="circle" color="#888" size="18"></i></div>
-            <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16"></i></div>
+            <div class="nav-btn-circle" onclick="location.reload()"><i data-lucide="circle" color="#888" size="18" stroke-width="3"></i></div>
+            <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16" stroke-width="3"></i></div>
         </div>
 
         <!-- MODAL NOTIFIKASI -->
@@ -257,6 +249,7 @@
             <div class="modal-card !text-left">
                 <h3 class="font-black text-white mb-6 uppercase text-center text-sm">Aktivasi PIN Baru</h3>
                 <div class="field-wrapper mb-6 text-center">
+                    <label class="input-label">6 Digit Angka</label>
                     <input type="text" id="newPinInput" class="input-pin !text-2xl !py-4" maxlength="6" inputmode="numeric" placeholder="000000">
                 </div>
                 <div class="flex gap-3">
@@ -269,11 +262,11 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =================================================================
-        // ✅ KONFIGURASI OTOMATIS BERDASARKAN DATA ASLI BOS
+        // 🔥 AUTO-CONFIG FIX BERDASARKAN DATA ASLI BOS (Screenshot 01.33)
         // =================================================================
         const MY_FIREBASE_PROJECT = {
             apiKey: "AIzaSyBonuHp4nd-YZKWV5IM_2HRcfJ2TQ4zJaY", 
@@ -285,27 +278,43 @@
         };
         // =================================================================
 
-        const firebaseConfig = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : MY_FIREBASE_PROJECT;
+        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config) 
+            ? JSON.parse(__firebase_config) : MY_FIREBASE_PROJECT;
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const APP_ID = "CSID_PRO_FINAL_STABLE_V20";
+        const APP_ID = "CSID_PRO_ULTIMATE_FINAL_V1";
 
         let currentUser = null;
         let navigationHistory = ['pageLogin'];
 
-        // --- SISTEM AUTH APK ---
+        // --- SISTEM AUTH APK (Sangat Penting Agar Tidak Gagal Koneksi) ---
         const initAuth = async () => {
             if (currentUser) return currentUser;
             try {
-                const res = await signInAnonymously(auth);
-                currentUser = res.user;
-                return currentUser;
-            } catch (e) { return null; }
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                return new Promise((resolve) => {
+                    const unsub = onAuthStateChanged(auth, (user) => {
+                        currentUser = user;
+                        unsub();
+                        resolve(user);
+                    });
+                });
+            } catch (e) { 
+                console.error("Auth System Error", e);
+                return null; 
+            }
         };
 
         window.handleNopolTyping = (el) => {
-            el.value = el.value.toUpperCase().replace(/[^A-Z0-9\s]/g, '').replace(/\s\s+/g, ' ');
+            const start = el.selectionStart;
+            const val = el.value.toUpperCase().replace(/[^A-Z0-9\s]/g, '').replace(/\s\s+/g, ' ');
+            if (el.value !== val) { el.value = val; try { el.setSelectionRange(start, start); } catch(e) {} }
         };
 
         window.togglePinMask = () => {
@@ -325,10 +334,11 @@
                 if(pin === "280189") { performLoginSuccess({username:"ADMIN", role:"admin"}); return; }
                 const user = await initAuth();
                 if(!user) throw new Error();
+                
                 const snap = await getDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin));
                 if(snap.exists()) performLoginSuccess(snap.data());
                 else window.showSystemAlert("GAGAL", "PIN tidak terdaftar di database.");
-            } catch (e) { window.showSystemAlert("ERROR", "Sinkronisasi database gagal."); }
+            } catch (e) { window.showSystemAlert("ERROR", "Database gagal sinkron. Pastikan Authorized Domain Firebase aktif."); }
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
@@ -336,31 +346,41 @@
             localStorage.setItem('csid_active_session', data.username);
             document.getElementById('profileUnit').innerText = "ID: " + data.username;
             if(data.role === 'admin') {
+                document.getElementById('profileExpiry').innerText = "ADMIN MODE";
                 document.getElementById('tabAdmin').classList.remove('hidden');
                 window.loadAdminData();
             }
             window.navigateTo('pageSearch');
         };
 
-        // --- SISTEM AKTIVASI PIN BARU ---
+        // --- SISTEM AKTIVASI PIN BARU (WAJIB JALAN DI APK/HOSTING) ---
         window.submitNewPin = async () => {
             const pin = document.getElementById('newPinInput').value.trim();
             const btn = document.getElementById('btnRegSubmit');
             if(pin.length < 4) return window.showSystemAlert("INFO", "PIN minimal 4 angka.");
             btn.disabled = true; btn.innerText = "MENYIMPAN...";
             try {
-                await initAuth();
-                const path = doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin);
-                await setDoc(path, { username: pin, role: 'agent', status: 'active', createdAt: new Date().toISOString() });
-                window.closeRegisterModal();
-                window.showSystemAlert("BERHASIL", `PIN ${pin} Berhasil Aktif.`);
+                const user = await initAuth();
+                if(!user) throw new Error();
+                
+                const agentRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin);
+                await setDoc(agentRef, {
+                    username: pin, role: 'agent', status: 'active', createdAt: new Date().toISOString()
+                });
+                
+                window.closeRegisterModal(); 
+                window.showSystemAlert("BERHASIL", `PIN ${pin} telah aktif.`);
                 document.getElementById('newPinInput').value = "";
-            } catch (e) { window.showSystemAlert("GAGAL", "Pastikan domain GitHub sudah diizinkan di Firebase."); }
+            } catch (e) { 
+                console.error(e);
+                window.showSystemAlert("GAGAL", "Izin ditolak! Pastikan domain 'imeicarindonesia-eng.github.io' sudah bos masukkan di menu Authorized Domains Firebase."); 
+            }
             finally { btn.disabled = false; btn.innerText = "AKTIFKAN"; }
         };
 
         window.loadAdminData = async () => {
-            await initAuth();
+            const user = await initAuth();
+            if (!user) return;
             onSnapshot(collection(db, 'artifacts', APP_ID, 'public', 'data', 'agents'), (snap) => {
                 const list = document.getElementById('agentsListMount');
                 if(!list) return;
@@ -383,28 +403,30 @@
             const nopol = document.getElementById('plateInput').value.replace(/\s/g, '');
             if(!nopol) return;
             window.navigateTo('pageResult');
-            document.getElementById('resultMount').innerHTML = "<div class='py-32 text-center text-white animate-pulse'><p class='font-black tracking-widest'>MEMINDAI DATA...</p></div>";
+            document.getElementById('resultMount').innerHTML = "<div class='py-32 text-center text-white animate-pulse'><p class='font-black tracking-widest uppercase'>Turbo Scan...</p></div>";
             try {
                 const res = await fetch(`https://elangninja.space/?key=9611bbce88d6dbd96cdfd83619233efb&s=${nopol}`);
                 const data = await res.json();
                 if(data && data.length > 0) displayVehicle(data[0]);
-                else document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-red-500 font-black'>DATA TIDAK DITEMUKAN</div>";
-            } catch (e) { document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-white'>GANGGUAN SERVER</div>"; }
+                else document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-red-500 font-black uppercase'>Data Tidak Ditemukan</div>";
+            } catch (e) { document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-white uppercase'>Gangguan Server</div>"; }
         };
 
         const displayVehicle = (d) => {
             const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
             document.getElementById('resultMount').innerHTML = `
                 <div class="result-card fade-in">
-                    <div class="result-header">HASIL PENCARIAN</div>
+                    <div class="result-header uppercase tracking-widest">Hasil Pencarian</div>
                     <div class="result-body font-bold text-left">
-                        <div class="result-section">IDENTITAS PEMILIK</div>
+                        <div class="result-section">Identitas Pemilik : 🖋</div>
                         <p class="mb-1">No. Polisi : ${p}</p>
                         <p class="mb-1">Pemilik : ${d.owner_name || '-'}</p>
-                        <div class="result-section">DATA KENDARAAN</div>
+                        <p class="mb-1">Alamat : ${d.owner_address || '-'}</p>
+                        <div class="result-section">Data Kendaraan : 🖋</div>
                         <p class="mb-1">Merek : ${d.brand || '-'}</p>
                         <p class="mb-1">Tahun : ${d.manufacture_year || '-'}</p>
-                        <div class="mt-8 pt-5 border-t border-zinc-900 text-[10px] text-gray-500 italic uppercase text-center">IDENTITAS RESMI TNKB</div>
+                        <p class="mb-1">No. Mesin : ${d.engine_number || '-'}</p>
+                        <div class="mt-8 pt-5 border-t border-zinc-900 text-[10px] text-gray-500 italic uppercase text-center">Identitas Resmi TNKB Nasional</div>
                     </div>
                 </div>`;
         };
@@ -430,7 +452,7 @@
             if (window.lucide) window.lucide.createIcons();
             const user = await initAuth();
             if (user) document.getElementById('statusServer').innerText = "✅ Server Terhubung";
-            else document.getElementById('statusServer').innerText = "❌ Cek Koneksi Internet";
+            else document.getElementById('statusServer').innerText = "❌ Gangguan Server";
             
             const saved = localStorage.getItem('csid_active_session');
             if(saved) performLoginSuccess({username: saved, role: saved === 'ADMIN' ? 'admin' : 'agent'});
