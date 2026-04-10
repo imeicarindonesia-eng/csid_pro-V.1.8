@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CSID_PRO - Mobile Elite</title>
+    <title>⚡CSID_PRO - Mobile Elite</title>
     
     <!-- Meta Tags PWA & Mobile Guard -->
     <meta name="theme-color" content="#000000">
@@ -15,12 +15,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono:wght@700&display=swap');
 
         :root {
             --bg-android: #000000;
             --surface-android: #121212;
-            --accent-primary: #CD7F32;
+            --accent-primary: #CD7F32; /* Bronze */
             --android-blue: #4285F4;
             --text-primary: #E1E1E1;
             --system-bar: #000000;
@@ -44,7 +44,6 @@
             width: 100vw;
         }
 
-        /* Full Screen UI - No Status Bar */
         .android-wrapper {
             width: 100%;
             height: 100vh;
@@ -65,7 +64,6 @@
             }
         }
 
-        /* Nav Bar System */
         .nav-system-bar {
             height: 52px;
             background: var(--system-bar);
@@ -109,31 +107,38 @@
 
         .input-label { display: block; margin-bottom: 10px; color: #777; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
         
-        .field-wrapper { position: relative; width: 100%; }
         .input-pin {
-            width: 100%; padding: 20px; background: #000; border: 2px solid #333; border-radius: 18px; color: #fff;
-            font-size: 1.8rem; font-weight: 900; text-align: center; letter-spacing: 12px; transition: 0.3s;
+            width: 100%; padding: 18px; background: #000; border: 2px solid #333; border-radius: 18px; color: #fff;
+            font-size: 1.8rem; font-weight: 900; text-align: center; letter-spacing: 10px; transition: 0.3s;
         }
-        .input-pin:focus { border-color: var(--android-blue); box-shadow: 0 0 15px rgba(66, 133, 244, 0.2); }
 
-        .eye-toggle { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #555; cursor: pointer; padding: 10px; z-index: 10; border: none; background: transparent; }
-
+        /* AREA NOPOL - STABIL & LUAS */
         .plate-container {
-            background: #000; border: 2.5px solid #fff; border-radius: 20px; height: 95px; margin: 20px 0;
-            display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+            background: #000; border: 3px solid #fff; border-radius: 20px; height: 95px; margin: 20px 0;
+            display: flex; align-items: center; position: relative; overflow: hidden; width: 100%;
         }
         #plateInput {
-            width: 100%; height: 100%; background: transparent !important; border: none !important; color: #ffffff !important; 
-            font-size: 2.4rem; font-weight: 900; text-align: center; caret-color: var(--accent-primary); letter-spacing: 4px;
-            text-transform: uppercase; padding: 0 15px; display: block; -webkit-text-fill-color: #ffffff !important;
+            flex: 1; height: 100%; background: transparent !important; border: none !important; color: #ffffff !important; 
+            font-size: 1.8rem; font-weight: 900; text-align: center; caret-color: var(--accent-primary);
+            text-transform: uppercase; padding: 0 50px; display: block; width: 100%;
+            letter-spacing: 1px; font-family: 'Roboto Mono', monospace;
         }
-        #plateInput::placeholder { color: #333; font-size: 1.1rem; text-transform: none; letter-spacing: 0; }
+        #plateInput::placeholder { 
+            text-transform: lowercase; font-size: 1rem; color: #ffffff; opacity: 0.5; font-weight: 400; font-family: 'Roboto', sans-serif;
+        }
+
+        .input-action-btn { 
+            position: absolute; width: 45px; height: 100%; display: flex; align-items: center; justify-content: center;
+            color: #ffffff; opacity: 0.8; cursor: pointer; transition: 0.2s; z-index: 10;
+        }
+        .input-action-btn:active { opacity: 1; transform: scale(0.9); }
+        .btn-scan { left: 5px; }
+        .btn-paste { right: 5px; }
 
         .btn-android {
             width: 100%; padding: 18px; border-radius: 18px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 12px; border: none; font-size: 14px; cursor: pointer; transition: 0.2s;
         }
         .btn-android:active { transform: scale(0.96); opacity: 0.8; }
-        .btn-android:disabled { opacity: 0.4; filter: grayscale(1); cursor: not-allowed; }
         .btn-solid { background: #fff; color: #000; }
         .btn-ghost { background: #1a1a1a; border: 1px solid #333; color: #fff; }
         .btn-success { background: #25D366; color: #fff; }
@@ -141,79 +146,99 @@
         .tab-bar { background: #050505; border-top: 1px solid #1a1a1a; display: flex; padding-bottom: env(safe-area-inset-bottom); }
         .tab-item { flex: 1; padding: 14px 0; display: flex; flex-direction: column; align-items: center; font-size: 10px; font-weight: 700; color: #444; cursor: pointer; }
         .tab-item.active { color: #fff; }
-        .tab-item.active i { color: var(--android-blue); stroke-width: 3; }
 
+        /* UI HASIL PENCARIAN ELEGAN */
         .result-card { background: #000; border: 1px solid #222; border-radius: 24px; overflow: hidden; margin: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
-        .result-header { background: #fff; color: #000; padding: 16px; text-align: center; font-weight: 900; font-size: 15px; letter-spacing: 1px; }
-        .result-body { padding: 25px; font-size: 13.5px; line-height: 1.7; color: #fff; }
-        .result-section { color: var(--accent-primary); font-weight: 900; margin: 22px 0 12px 0; border-bottom: 1.5px solid #222; font-size: 12px; padding-bottom: 5px; text-transform: uppercase; }
-        .result-row { display: flex; margin-bottom: 10px; border-bottom: 1px solid #0d0d0d; padding-bottom: 6px; }
-        .result-label { width: 115px; color: #666; flex-shrink: 0; font-weight: 500; }
-        .result-value { color: #fff; font-weight: 600; word-break: break-word; }
+        .result-header { background: #fff; color: #000; padding: 16px; text-align: center; font-weight: 900; font-size: 14px; }
+        .result-body { padding: 25px; font-size: 13px; line-height: 1.6; color: #fff; text-align: left; }
+        .result-section { color: var(--accent-primary); font-weight: 900; margin: 22px 0 10px 0; border-bottom: 1.5px solid #222; font-size: 11px; padding-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .result-row { display: flex; margin-bottom: 4px; }
+        .res-label { width: 115px; color: #888; font-weight: 500; flex-shrink: 0; }
+        .res-val { color: #fff; font-weight: 700; word-break: break-word; }
 
         .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 25px; backdrop-filter: blur(20px); }
         .modal-card { background: var(--surface-android); border-radius: 30px; padding: 30px; width: 100%; max-width: 340px; border: 1px solid #333; text-align: center; }
+    
+        .color-bronze { color: var(--accent-primary); font-weight: 900; font-family: monospace; }
+        
+        #ocrLoading { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; color: white; }
     </style>
 </head>
 <body>
 
+    <div id="ocrLoading">
+        <div class="w-12 h-12 border-4 border-white/20 border-t-[#CD7F32] rounded-full animate-spin mb-4"></div>
+        <p class="font-black text-[10px] uppercase tracking-widest text-white animate-pulse">⚡ AI Menganalisa Plat...</p>
+    </div>
+
     <div class="android-wrapper">
         <div class="app-main" id="scrollLayer">
-            <!-- HEADER APP -->
+            <!-- HEADER -->
             <div id="appHeader" class="header-ui hidden">
-                <h1 class="font-black text-[#CD7F32] italic text-lg tracking-tight uppercase">CSID_PRO</h1>
+                <h1 class="font-black text-[#CD7F32] italic text-lg tracking-tight uppercase">⚡CSID_PRO</h1>
                 <div class="flex items-center gap-4">
                     <div class="text-right">
                         <p id="profileUnit" class="text-[9px] font-black text-white uppercase opacity-40"></p>
-                        <p id="profileExpiry" class="text-[8px] font-black uppercase text-green-500 font-black">SISTEM ONLINE</p>
+                        <p id="profileExpiry" class="text-[8px] font-black uppercase color-bronze">Memuat...</p>
                     </div>
                     <button onclick="window.processLogout()" class="text-red-500 p-2"><i data-lucide="log-out" size="22"></i></button>
                 </div>
             </div>
 
-            <!-- LOGIN PAGE -->
+            <!-- LOGIN -->
             <div id="pageLogin" class="page flex-1 flex flex-col justify-center">
                 <div class="text-center mb-10">
-                    <h1 class="text-5xl font-black text-white italic tracking-tighter uppercase">CSID_PRO</h1>
+                    <h1 class="text-5xl font-black text-white italic tracking-tighter uppercase">⚡CSID_PRO</h1>
                     <p class="text-[11px] font-black text-blue-500 uppercase tracking-[6px] mt-2">Samsat Online Nasional</p>
                 </div>
                 <div class="android-card">
                     <div class="field-wrapper mb-6">
                         <label class="input-label">Akses Kode PIN</label>
-                        <div class="relative">
-                            <input type="password" id="loginPinField" class="input-pin" maxlength="10" inputmode="numeric" placeholder="••••••">
-                            <button class="eye-toggle" onclick="window.togglePinMask()">
-                                <i id="pinEyeIcon" data-lucide="eye" size="22"></i>
-                            </button>
-                        </div>
+                        <input type="password" id="loginPinField" class="input-pin" maxlength="10" inputmode="numeric" placeholder="••••••">
                     </div>
                     <button class="btn-android btn-solid" id="btnLoginSubmit" onclick="window.handleUserLogin()">MASUK KE SISTEM</button>
+                    <button class="btn-android btn-ghost mt-4 !border-dashed border-gray-600 !text-gray-400" onclick="window.openRegWA()">
+                        <i data-lucide="message-circle" size="18"></i> DAFTAR AKSES (WA)
+                    </button>
                 </div>
-                <p id="statusServer" class="text-[10px] text-center text-gray-500 font-bold mt-5 px-10 leading-relaxed"></p>
+                <p id="statusServer" class="text-[10px] text-center text-gray-500 font-bold mt-5 px-10 leading-relaxed">Menghubungkan database...</p>
             </div>
 
-            <!-- SEARCH PAGE -->
+            <!-- SEARCH -->
             <div id="pageSearch" class="page hidden flex-1">
-                <div class="mt-14 text-center"><p class="text-[11px] font-black text-white/30 uppercase tracking-[5px]">Pemindaian Data Nasional</p></div>
+                <div class="mt-14 text-center">
+                    <p class="text-[11px] font-black text-white uppercase tracking-[5px]">SELAMAT DATANG</p>
+                </div>
                 <div class="android-card">
                     <div class="plate-container">
-                        <input type="text" id="plateInput" placeholder="Masukan Kode" autocomplete="off" oninput="window.handleNopolTyping(this)">
+                        <div class="input-action-btn btn-scan" onclick="window.triggerCamera()">
+                            <i data-lucide="camera" size="24"></i>
+                        </div>
+                        <input type="text" id="plateInput" placeholder="masukan nomor" autocomplete="off" oninput="window.handleNopolTyping(this)">
+                        <div class="input-action-btn btn-paste" onclick="window.handlePaste()">
+                            <i data-lucide="clipboard-list" size="24"></i>
+                        </div>
                     </div>
+                    <input type="file" id="cameraInput" accept="image/*" capture="environment" class="hidden" onchange="window.handleImageUpload(event)">
                     <button class="btn-android btn-solid" onclick="window.fetchVehicleData()">
                         <i data-lucide="search-code" size="20"></i> CEK KENDARAAN
                     </button>
                 </div>
             </div>
 
-            <!-- RESULT PAGE -->
+            <!-- RESULT -->
             <div id="pageResult" class="page hidden flex-1">
                 <div id="resultMount"></div>
                 <div class="px-5 pb-14">
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="btn-android btn-ghost !py-4" onclick="window.copyToClipboard()"><i data-lucide="copy" size="18"></i> SALIN</button>
+                        <button class="btn-android btn-success !py-4" onclick="window.shareToWA()"><i data-lucide="share-2" size="18"></i> WHATSAPP</button>
+                    </div>
                     <button class="btn-android btn-ghost mt-4 !border-none text-xs text-gray-500 font-black uppercase" onclick="window.navigateTo('pageSearch')">Kembali</button>
                 </div>
             </div>
 
-            <!-- ADMIN PAGE -->
+            <!-- ADMIN -->
             <div id="pageAdmin" class="page hidden flex-1">
                 <div class="p-6 flex justify-between items-center bg-zinc-950/50">
                     <h2 class="text-white font-black text-sm uppercase tracking-tighter">Control Panel</h2>
@@ -225,17 +250,20 @@
         </div>
 
         <div id="bottomNavBar" class="tab-bar hidden">
-            <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')"><i data-lucide="scan-line" size="24"></i><span class="mt-1">PENCARIAN</span></div>
-            <div id="tabAdmin" class="tab-item hidden" onclick="window.navigateTo('pageAdmin')"><i data-lucide="shield-check" size="24"></i><span class="mt-1">ADMIN</span></div>
+            <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')">
+                <i data-lucide="scan-line" size="24"></i><span class="mt-1 uppercase text-[9px]">Pencarian</span>
+            </div>
+            <div id="tabAdmin" class="tab-item hidden" onclick="window.navigateTo('pageAdmin')">
+                <i data-lucide="shield-check" size="24"></i><span class="mt-1 uppercase text-[9px]">Admin</span>
+            </div>
         </div>
 
         <div class="nav-system-bar">
             <div class="nav-btn-circle" onclick="window.handleSystemBack()"><i data-lucide="chevron-left" color="#888" size="22"></i></div>
-            <div class="nav-btn-circle" onclick="location.reload()"><i data-lucide="circle" color="#888" size="18" stroke-width="3"></i></div>
-            <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16" stroke-width="3"></i></div>
+            <div class="nav-btn-circle" onclick="location.reload()"><i data-lucide="circle" color="#888" size="18"></i></div>
+            <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16"></i></div>
         </div>
 
-        <!-- MODAL NOTIFIKASI -->
         <div id="modalAlert" class="modal-overlay">
             <div class="modal-card">
                 <h3 id="alertTitle" class="font-black text-white mb-3 uppercase text-sm">Sistem</h3>
@@ -244,7 +272,6 @@
             </div>
         </div>
 
-        <!-- MODAL AKTIVASI PIN -->
         <div id="modalAddPin" class="modal-overlay">
             <div class="modal-card !text-left">
                 <h3 class="font-black text-white mb-6 uppercase text-center text-sm">Aktivasi PIN Baru</h3>
@@ -265,139 +292,205 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // =================================================================
-        // 🔥 AUTO-CONFIG FIX BERDASARKAN DATA ASLI BOS (Screenshot 01.33)
-        // =================================================================
-        const MY_FIREBASE_PROJECT = {
-            apiKey: "AIzaSyBonuHp4nd-YZKWV5IM_2HRcfJ2TQ4zJaY", 
+        // Firebase Config
+        const apiKey = ""; 
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: apiKey, 
             authDomain: "gen-lang-client-0221970857.firebaseapp.com",
             projectId: "gen-lang-client-0221970857",
             storageBucket: "gen-lang-client-0221970857.firebasestorage.app",
             messagingSenderId: "483674298302",
             appId: "1:483674298302:web:1fe90dc43295df2abecbef"
         };
-        // =================================================================
-
-        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config) 
-            ? JSON.parse(__firebase_config) : MY_FIREBASE_PROJECT;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : '⚡CSID_PRO_V300_FINAL'; 
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const APP_ID = "CSID_PRO_ULTIMATE_FINAL_V1";
 
         let currentUser = null;
-        let navigationHistory = ['pageLogin'];
+        let vehicleData = null; 
+        let countdownInterval = null;
 
-        // --- SISTEM AUTH APK (Sangat Penting Agar Tidak Gagal Koneksi) ---
+        const getDeviceId = () => {
+            let id = localStorage.getItem('csid_device_fingerprint');
+            if(!id) {
+                id = 'UID-' + Math.random().toString(36).substring(2, 12).toUpperCase();
+                localStorage.setItem('csid_device_fingerprint', id);
+            }
+            return id;
+        };
+
         const initAuth = async () => {
             if (currentUser) return currentUser;
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                return new Promise((resolve) => {
-                    const unsub = onAuthStateChanged(auth, (user) => {
+            return new Promise((resolve) => {
+                const triggerAuth = async () => {
+                    try {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (e) { console.error(e); }
+                };
+                const unsub = onAuthStateChanged(auth, (user) => {
+                    if (user) {
                         currentUser = user;
-                        unsub();
-                        resolve(user);
-                    });
+                        document.getElementById('statusServer').innerText = "✅ Server Terhubung";
+                        unsub(); resolve(user);
+                    }
                 });
-            } catch (e) { 
-                console.error("Auth System Error", e);
-                return null; 
+                triggerAuth(); setTimeout(() => resolve(null), 10000);
+            });
+        };
+
+        window.handlePaste = async () => {
+            const text = prompt("Tempel nomor plat di sini:");
+            if (text) {
+                const input = document.getElementById('plateInput');
+                input.value = text.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                window.handleNopolTyping(input);
             }
+        };
+
+        window.triggerCamera = () => { document.getElementById('cameraInput').click(); };
+
+        window.handleImageUpload = async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64Data = e.target.result.split(',')[1];
+                document.getElementById('ocrLoading').style.display = 'flex';
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: "Extract license plate from this vehicle image. Return ONLY characters. Example: BL8283S." }, { inlineData: { mimeType: "image/png", data: base64Data } }] }]
+                        })
+                    });
+                    const result = await response.json();
+                    const nopol = result.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+                    if (nopol) {
+                        const input = document.getElementById('plateInput');
+                        input.value = nopol.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                        window.handleNopolTyping(input);
+                    }
+                } catch (err) { } finally { document.getElementById('ocrLoading').style.display = 'none'; event.target.value = ""; }
+            };
+            reader.readAsDataURL(file);
+        };
+
+        const startLiveCountdown = (expiryIso) => {
+            if(countdownInterval) clearInterval(countdownInterval);
+            if(expiryIso === "PERMANEN") { document.getElementById('profileExpiry').innerText = "STATUS: PERMANEN"; return; }
+            const updateUI = () => {
+                const diff = new Date(expiryIso).getTime() - new Date().getTime();
+                if (diff <= 0) {
+                    document.getElementById('profileExpiry').innerText = "EXPIRED";
+                    document.getElementById('profileExpiry').style.color = "#ef4444";
+                    clearInterval(countdownInterval); return;
+                }
+                const d = Math.floor(diff/(1000*60*60*24)), h = Math.floor((diff%(1000*60*60*24))/(1000*60*60)), m = Math.floor((diff%(1000*60*60))/(1000*60)), s = Math.floor((diff%(1000*60))/1000);
+                document.getElementById('profileExpiry').innerText = `SISA: ${d}H ${h}J ${m}M ${s}D`;
+            };
+            updateUI(); countdownInterval = setInterval(updateUI, 1000);
         };
 
         window.handleNopolTyping = (el) => {
             const start = el.selectionStart;
-            const val = el.value.toUpperCase().replace(/[^A-Z0-9\s]/g, '').replace(/\s\s+/g, ' ');
-            if (el.value !== val) { el.value = val; try { el.setSelectionRange(start, start); } catch(e) {} }
-        };
-
-        window.togglePinMask = () => {
-            const input = document.getElementById('loginPinField');
-            const icon = document.getElementById('pinEyeIcon');
-            input.type = (input.type === 'password') ? 'text' : 'password';
-            icon.setAttribute('data-lucide', input.type === 'password' ? 'eye' : 'eye-off');
-            if (window.lucide) window.lucide.createIcons();
+            const originalVal = el.value;
+            const cleaned = originalVal.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (cleaned.length > 10) el.style.fontSize = "1.4rem";
+            else if (cleaned.length > 8) el.style.fontSize = "1.6rem";
+            else el.style.fontSize = "1.8rem";
+            if (originalVal !== cleaned) {
+                el.value = cleaned;
+                try { el.setSelectionRange(start, start); } catch(e) {}
+            }
+            el.scrollLeft = el.scrollWidth;
         };
 
         window.handleUserLogin = async () => {
             const pin = document.getElementById('loginPinField').value.trim();
             if(!pin) return;
             const btn = document.getElementById('btnLoginSubmit');
-            btn.disabled = true; btn.innerText = "MENGHUBUNGKAN...";
+            btn.disabled = true; btn.innerText = "VERIFIKASI...";
             try {
-                if(pin === "280189") { performLoginSuccess({username:"ADMIN", role:"admin"}); return; }
+                if(pin === "280189") { performLoginSuccess({username:"ADMIN", role:"admin", expiryDate: "PERMANEN"}); return; }
                 const user = await initAuth();
-                if(!user) throw new Error();
-                
-                const snap = await getDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin));
-                if(snap.exists()) performLoginSuccess(snap.data());
-                else window.showSystemAlert("GAGAL", "PIN tidak terdaftar di database.");
-            } catch (e) { window.showSystemAlert("ERROR", "Database gagal sinkron. Pastikan Authorized Domain Firebase aktif."); }
+                const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', pin));
+                if(snap.exists()) {
+                    const data = snap.data(), myDevice = getDeviceId();
+                    if (data.deviceId && data.deviceId !== myDevice) {
+                        window.showSystemAlert("AKSES DITOLAK", "PIN ini sudah terikat di perangkat lain."); return;
+                    }
+                    if (!data.deviceId) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', pin), { deviceId: myDevice });
+                    if (data.expiryDate !== "PERMANEN" && new Date() > new Date(data.expiryDate)) {
+                        window.showSystemAlert("MASA AKTIF HABIS", "Silakan hubungi Admin."); return;
+                    }
+                    performLoginSuccess(data);
+                } else { window.showSystemAlert("GAGAL", "PIN tidak terdaftar."); }
+            } catch (e) { window.showSystemAlert("ERROR", "Database gagal."); } 
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
         const performLoginSuccess = (data) => {
             localStorage.setItem('csid_active_session', data.username);
             document.getElementById('profileUnit').innerText = "ID: " + data.username;
+            startLiveCountdown(data.expiryDate);
             if(data.role === 'admin') {
-                document.getElementById('profileExpiry').innerText = "ADMIN MODE";
                 document.getElementById('tabAdmin').classList.remove('hidden');
                 window.loadAdminData();
             }
             window.navigateTo('pageSearch');
         };
 
-        // --- SISTEM AKTIVASI PIN BARU (WAJIB JALAN DI APK/HOSTING) ---
         window.submitNewPin = async () => {
             const pin = document.getElementById('newPinInput').value.trim();
-            const btn = document.getElementById('btnRegSubmit');
             if(pin.length < 4) return window.showSystemAlert("INFO", "PIN minimal 4 angka.");
-            btn.disabled = true; btn.innerText = "MENYIMPAN...";
             try {
-                const user = await initAuth();
-                if(!user) throw new Error();
-                
-                const agentRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin);
-                await setDoc(agentRef, {
-                    username: pin, role: 'agent', status: 'active', createdAt: new Date().toISOString()
+                await initAuth();
+                const expiry = new Date(); expiry.setDate(expiry.getDate() + 30);
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', pin), { 
+                    username: pin, role: 'agent', status: 'active', 
+                    createdAt: new Date().toISOString(), expiryDate: expiry.toISOString(), deviceId: null
                 });
-                
-                window.closeRegisterModal(); 
-                window.showSystemAlert("BERHASIL", `PIN ${pin} telah aktif.`);
-                document.getElementById('newPinInput').value = "";
-            } catch (e) { 
-                console.error(e);
-                window.showSystemAlert("GAGAL", "Izin ditolak! Pastikan domain 'imeicarindonesia-eng.github.io' sudah bos masukkan di menu Authorized Domains Firebase."); 
-            }
-            finally { btn.disabled = false; btn.innerText = "AKTIFKAN"; }
+                window.closeRegisterModal(); window.showSystemAlert("BERHASIL", `PIN ${pin} aktif.`);
+            } catch (e) { window.showSystemAlert("GAGAL", "Izin ditolak!"); } 
         };
 
         window.loadAdminData = async () => {
             const user = await initAuth();
             if (!user) return;
-            onSnapshot(collection(db, 'artifacts', APP_ID, 'public', 'data', 'agents'), (snap) => {
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'agents'), (snap) => {
                 const list = document.getElementById('agentsListMount');
                 if(!list) return;
                 document.getElementById('totalUsersCounter').innerText = `TOTAL: ${snap.size} UNIT AKTIF`;
                 list.innerHTML = "";
                 snap.forEach(d => {
                     const a = d.data();
-                    list.innerHTML += `<div class="android-card !p-4 !m-0 !mb-3 border-l-4 border-blue-600 text-left text-white flex justify-between items-center">
-                        <p class="text-xs font-black">ID: ${a.username}</p>
-                        <button class="text-red-500 p-2" onclick="window.removeAgent('${a.username}')"><i data-lucide="trash-2" size="16"></i></button>
+                    let devLabel = a.deviceId ? `<span class="text-[#CD7F32] font-black">[TERKUNCI]</span>` : `<span class="text-white/30">[KOSONG]</span>`;
+                    list.innerHTML += `<div class="android-card !p-4 !m-0 !mb-3 border-l-4 border-[#CD7F32] text-left text-white flex justify-between items-center">
+                        <div><p class="text-xs font-black">ID: ${a.username}</p><p class="text-[9px] uppercase mt-1">${devLabel}</p></div>
+                        <div class="flex gap-2">
+                            ${a.deviceId ? `<button class="bg-blue-600 text-white p-2 rounded-lg" onclick="window.resetDevice('${a.username}')"><i data-lucide="refresh-cw" size="14"></i></button>` : ''}
+                            <button class="text-red-500 p-2" onclick="window.removeAgent('${a.username}')"><i data-lucide="trash-2" size="16"></i></button>
+                        </div>
                     </div>`;
                 });
                 if (window.lucide) window.lucide.createIcons();
             });
         };
 
-        window.removeAgent = async (u) => { if(confirm(`Hapus PIN ${u}?`)) { await initAuth(); await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', u)); } };
+        window.resetDevice = async (pin) => {
+            if(confirm(`Reset HP untuk PIN ${pin}?`)) {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', pin), { deviceId: null });
+                window.showSystemAlert("BERHASIL", `PIN ${pin} bisa login di HP baru.`);
+            }
+        };
+
+        window.removeAgent = async (u) => { if(confirm(`Hapus PIN ${u}?`)) { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', u)); } };
 
         window.fetchVehicleData = async () => {
             const nopol = document.getElementById('plateInput').value.replace(/\s/g, '');
@@ -407,28 +500,77 @@
             try {
                 const res = await fetch(`https://elangninja.space/?key=9611bbce88d6dbd96cdfd83619233efb&s=${nopol}`);
                 const data = await res.json();
-                if(data && data.length > 0) displayVehicle(data[0]);
+                if(data && data.length > 0) { vehicleData = data[0]; displayVehicle(data[0]); }
                 else document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-red-500 font-black uppercase'>Data Tidak Ditemukan</div>";
             } catch (e) { document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-white uppercase'>Gangguan Server</div>"; }
         };
 
+        // --- RENDER HASIL UI ---
         const displayVehicle = (d) => {
             const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
             document.getElementById('resultMount').innerHTML = `
                 <div class="result-card fade-in">
-                    <div class="result-header uppercase tracking-widest">Hasil Pencarian</div>
-                    <div class="result-body font-bold text-left">
-                        <div class="result-section">Identitas Pemilik : 🖋</div>
-                        <p class="mb-1">No. Polisi : ${p}</p>
-                        <p class="mb-1">Pemilik : ${d.owner_name || '-'}</p>
-                        <p class="mb-1">Alamat : ${d.owner_address || '-'}</p>
-                        <div class="result-section">Data Kendaraan : 🖋</div>
-                        <p class="mb-1">Merek : ${d.brand || '-'}</p>
-                        <p class="mb-1">Tahun : ${d.manufacture_year || '-'}</p>
-                        <p class="mb-1">No. Mesin : ${d.engine_number || '-'}</p>
-                        <div class="mt-8 pt-5 border-t border-zinc-900 text-[10px] text-gray-500 italic uppercase text-center">Identitas Resmi TNKB Nasional</div>
+                    <div class="result-header uppercase tracking-widest font-black">HASIL PENCARIAN</div>
+                    <div class="result-body">
+                        <p class="mb-4 text-xs">Sumber : Aplikasi cs.id pro</p>
+
+                        <div class="result-section">IDENTITAS PEMILIK : 🖋</div>
+                        <div class="result-row"><span class="res-label">No. Polisi</span><span class="res-val">: ${p}</span></div>
+                        <div class="result-row"><span class="res-label">Pemilik</span><span class="res-val">: ${d.owner_name || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Alamat</span><span class="res-val">: ${d.owner_address || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Nik</span><span class="res-val">: ${d.nik || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Pekerjaan</span><span class="res-val">: ${d.job || '-'}</span></div>
+
+                        <div class="result-section">DATA KENDARAAN: 🖋</div>
+                        <div class="result-row"><span class="res-label">Merek</span><span class="res-val">: ${d.brand || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Tipe</span><span class="res-val">: ${d.model || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Tahun</span><span class="res-val">: ${d.manufacture_year || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Warna</span><span class="res-val">: ${d.color || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Silinder</span><span class="res-val">: ${d.engine_capacity || '-'} cc</span></div>
+                        <div class="result-row"><span class="res-label">Roda</span><span class="res-val">: ${d.wheels || '0'}</span></div>
+                        <div class="result-row"><span class="res-label">No. Rangka</span><span class="res-val">: ${d.chassis_number || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">No. Mesin</span><span class="res-val">: ${d.engine_number || '-'}</span></div>
+
+                        <div class="result-section">DOKUMEN RESMI : 🖋</div>
+                        <div class="result-row"><span class="res-label">No. Bpkb</span><span class="res-val">: ${d.bpkb_number || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">No. Stnk</span><span class="res-val">: ${d.stnk_number || '-'}</span></div>
+                        <div class="result-row"><span class="res-label">Tanggal Daftar</span><span class="res-val">: ${d.registration_date || '-'}</span></div>
+
+                        <div class="mt-6 pt-4 border-t border-zinc-900 text-[10px] text-gray-500 italic uppercase">
+                            <p class="font-black text-gray-400 mb-2">NOTE : ⚠️</p>
+                            ALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.
+                        </div>
+
+                        <div class="mt-4 text-[11px] font-black">
+                            <p class="text-[#CD7F32] mb-1">CP Link Aplikasi : CS.ID 👥</p>
+                            <p class="text-blue-500 underline">https://wa.me/628136900872</p>
+                        </div>
                     </div>
                 </div>`;
+        };
+
+        // --- FORMAT TEKS BAGI (WHATSAPP & COPY) ---
+        const generateFullText = () => {
+            if(!vehicleData) return "";
+            const d = vehicleData, p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
+            return `Sumber : Aplikasi cs.id pro\n\nIDENTITAS PEMILIK : 🖋\nNo. Polisi : ${p}\nPemilik : ${d.owner_name || '-'}\nAlamat\t: ${d.owner_address || '-'}\nNik\t: ${d.nik || '-'}\nPekerjaan : ${d.job || '-'}\n\nDATA KENDARAAN: 🖋\nMerek\t: ${d.brand || '-'}\nTipe\t: ${d.model || '-'}\nTahun\t: ${d.manufacture_year || '-'}\nWarna\t: ${d.color || '-'}\nSilinder\t: ${d.engine_capacity || '-'} cc\nRoda\t: ${d.wheels || '0'}\nNo. Rangka\t: ${d.chassis_number || '-'}\nNo. Mesin\t: ${d.engine_number || '-'}\n\nDOKUMEN RESMI : 🖋\nNo. Bpkb\t: ${d.bpkb_number || '-'}\nNo. Stnk\t: ${d.stnk_number || '-'}\nTanggal Daftar \t: ${d.registration_date || '-'}\n\nNOTE : ⚠️\n\nALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN. \n\nCP Link Aplikasi : CS.ID 👥\nhttps://wa.me/628136900872`;
+        };
+
+        window.copyToClipboard = () => {
+            const text = generateFullText(); if(!text) return;
+            const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            window.showSystemAlert("SALIN BERHASIL", "Laporan disalin sesuai format.");
+        };
+
+        window.shareToWA = () => {
+            const text = generateFullText(); if(!text) return;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        };
+
+        window.openRegWA = () => {
+            const autoPin = Math.floor(100000 + Math.random() * 900000);
+            const msg = encodeURIComponent(`Halo Admin CS.ID_PRO, mohon aktifkan PIN saya.\n\nKODE PIN: ${autoPin}\nMasa Aktif: 1 Bulan`);
+            window.open(`https://wa.me/628136900872?text=${msg}`, '_blank');
         };
 
         window.navigateTo = (id) => {
@@ -450,13 +592,15 @@
 
         window.onload = async () => {
             if (window.lucide) window.lucide.createIcons();
-            const user = await initAuth();
-            if (user) document.getElementById('statusServer').innerText = "✅ Server Terhubung";
-            else document.getElementById('statusServer').innerText = "❌ Gangguan Server";
-            
+            await initAuth();
             const saved = localStorage.getItem('csid_active_session');
-            if(saved) performLoginSuccess({username: saved, role: saved === 'ADMIN' ? 'admin' : 'agent'});
-            else window.navigateTo('pageLogin');
+            if(saved && currentUser) {
+                try {
+                    const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', saved));
+                    if (snap.exists()) performLoginSuccess(snap.data());
+                    else window.navigateTo('pageLogin');
+                } catch(e) { window.navigateTo('pageLogin'); }
+            } else window.navigateTo('pageLogin');
         };
     </script>
 </body>
