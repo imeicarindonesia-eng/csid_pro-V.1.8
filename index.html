@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>⚡CSID_PRO - Mobile Elite</title>
     
-    <!-- Meta Tags PWA & Mobile Guard -->
+    <!-- PWA & Mobile Optimization -->
     <meta name="theme-color" content="#000000">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -112,7 +112,7 @@
             font-size: 1.8rem; font-weight: 900; text-align: center; letter-spacing: 10px; transition: 0.3s;
         }
 
-        /* AREA NOPOL - STABIL & LUAS */
+        /* AREA NOPOL - STABIL & DYNAMIC FONT */
         .plate-container {
             background: #000; border: 3px solid #fff; border-radius: 20px; height: 95px; margin: 20px 0;
             display: flex; align-items: center; position: relative; overflow: hidden; width: 100%;
@@ -147,7 +147,7 @@
         .tab-item { flex: 1; padding: 14px 0; display: flex; flex-direction: column; align-items: center; font-size: 10px; font-weight: 700; color: #444; cursor: pointer; }
         .tab-item.active { color: #fff; }
 
-        /* UI HASIL PENCARIAN ELEGAN */
+        /* UI HASIL PENCARIAN ELEGAN (SESUAI TEMPLATE) */
         .result-card { background: #000; border: 1px solid #222; border-radius: 24px; overflow: hidden; margin: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
         .result-header { background: #fff; color: #000; padding: 16px; text-align: center; font-weight: 900; font-size: 14px; }
         .result-body { padding: 25px; font-size: 13px; line-height: 1.6; color: #fff; text-align: left; }
@@ -185,7 +185,7 @@
                 </div>
             </div>
 
-            <!-- LOGIN -->
+            <!-- LOGIN PAGE -->
             <div id="pageLogin" class="page flex-1 flex flex-col justify-center">
                 <div class="text-center mb-10">
                     <h1 class="text-5xl font-black text-white italic tracking-tighter uppercase">⚡CSID_PRO</h1>
@@ -204,7 +204,7 @@
                 <p id="statusServer" class="text-[10px] text-center text-gray-500 font-bold mt-5 px-10 leading-relaxed">Menghubungkan database...</p>
             </div>
 
-            <!-- SEARCH -->
+            <!-- SEARCH PAGE -->
             <div id="pageSearch" class="page hidden flex-1">
                 <div class="mt-14 text-center">
                     <p class="text-[11px] font-black text-white uppercase tracking-[5px]">SELAMAT DATANG</p>
@@ -226,7 +226,7 @@
                 </div>
             </div>
 
-            <!-- RESULT -->
+            <!-- RESULT PAGE -->
             <div id="pageResult" class="page hidden flex-1">
                 <div id="resultMount"></div>
                 <div class="px-5 pb-14">
@@ -238,7 +238,7 @@
                 </div>
             </div>
 
-            <!-- ADMIN -->
+            <!-- ADMIN PAGE -->
             <div id="pageAdmin" class="page hidden flex-1">
                 <div class="p-6 flex justify-between items-center bg-zinc-950/50">
                     <h2 class="text-white font-black text-sm uppercase tracking-tighter">Control Panel</h2>
@@ -249,6 +249,7 @@
             </div>
         </div>
 
+        <!-- TAB BAR -->
         <div id="bottomNavBar" class="tab-bar hidden">
             <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')">
                 <i data-lucide="scan-line" size="24"></i><span class="mt-1 uppercase text-[9px]">Pencarian</span>
@@ -264,6 +265,7 @@
             <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16"></i></div>
         </div>
 
+        <!-- MODALS -->
         <div id="modalAlert" class="modal-overlay">
             <div class="modal-card">
                 <h3 id="alertTitle" class="font-black text-white mb-3 uppercase text-sm">Sistem</h3>
@@ -292,17 +294,19 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Config
-        const apiKey = ""; 
+        // =================================================================
+        // ✅ KONFIGURASI FINAL ADAPTIF
+        // =================================================================
+        const apiKey = ""; // Otomatis oleh lingkungan, ganti dengan milik Anda untuk APK Luar.
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: apiKey, 
+            apiKey: "AIzaSyBonuHp4nd-YZKWV5IM_2HRcfJ2TQ4zJaY", 
             authDomain: "gen-lang-client-0221970857.firebaseapp.com",
             projectId: "gen-lang-client-0221970857",
             storageBucket: "gen-lang-client-0221970857.firebasestorage.app",
             messagingSenderId: "483674298302",
             appId: "1:483674298302:web:1fe90dc43295df2abecbef"
         };
-        const appId = typeof __app_id !== 'undefined' ? __app_id : '⚡CSID_PRO_V300_FINAL'; 
+        const appId = typeof __app_id !== 'undefined' ? __app_id : '⚡CSID_PRO_FINAL_V1'; 
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -312,6 +316,7 @@
         let vehicleData = null; 
         let countdownInterval = null;
 
+        // FINGERPRINT HP (1 HP 1 PIN)
         const getDeviceId = () => {
             let id = localStorage.getItem('csid_device_fingerprint');
             if(!id) {
@@ -331,7 +336,7 @@
                         } else {
                             await signInAnonymously(auth);
                         }
-                    } catch (e) { console.error(e); }
+                    } catch (e) { console.error("Auth Fail", e); }
                 };
                 const unsub = onAuthStateChanged(auth, (user) => {
                     if (user) {
@@ -340,15 +345,21 @@
                         unsub(); resolve(user);
                     }
                 });
-                triggerAuth(); setTimeout(() => resolve(null), 10000);
+                triggerAuth();
+                setTimeout(() => {
+                    if(!currentUser) document.getElementById('statusServer').innerText = "⚠️ Masalah Koneksi. Refresh?";
+                    resolve(null);
+                }, 10000);
             });
         };
 
+        // --- FITUR SCAN & PASTE ---
         window.handlePaste = async () => {
             const text = prompt("Tempel nomor plat di sini:");
             if (text) {
+                const cleaned = text.toUpperCase().replace(/[^A-Z0-9]/g, '');
                 const input = document.getElementById('plateInput');
-                input.value = text.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                input.value = cleaned;
                 window.handleNopolTyping(input);
             }
         };
@@ -363,7 +374,7 @@
                 const base64Data = e.target.result.split(',')[1];
                 document.getElementById('ocrLoading').style.display = 'flex';
                 try {
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${firebaseConfig.apiKey}`, {
                         method: 'POST',
                         body: JSON.stringify({
                             contents: [{ parts: [{ text: "Extract license plate from this vehicle image. Return ONLY characters. Example: BL8283S." }, { inlineData: { mimeType: "image/png", data: base64Data } }] }]
@@ -372,11 +383,13 @@
                     const result = await response.json();
                     const nopol = result.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
                     if (nopol) {
+                        const cleaned = nopol.toUpperCase().replace(/[^A-Z0-9]/g, '');
                         const input = document.getElementById('plateInput');
-                        input.value = nopol.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                        input.value = cleaned;
                         window.handleNopolTyping(input);
                     }
-                } catch (err) { } finally { document.getElementById('ocrLoading').style.display = 'none'; event.target.value = ""; }
+                } catch (err) { window.showSystemAlert("AI ERROR", "Gagal membaca foto."); } 
+                finally { document.getElementById('ocrLoading').style.display = 'none'; event.target.value = ""; }
             };
             reader.readAsDataURL(file);
         };
@@ -397,13 +410,17 @@
             updateUI(); countdownInterval = setInterval(updateUI, 1000);
         };
 
+        // --- STABILISATOR PENGETIKAN ---
         window.handleNopolTyping = (el) => {
             const start = el.selectionStart;
             const originalVal = el.value;
             const cleaned = originalVal.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            
+            // Auto Font Resize
             if (cleaned.length > 10) el.style.fontSize = "1.4rem";
             else if (cleaned.length > 8) el.style.fontSize = "1.6rem";
             else el.style.fontSize = "1.8rem";
+
             if (originalVal !== cleaned) {
                 el.value = cleaned;
                 try { el.setSelectionRange(start, start); } catch(e) {}
@@ -419,11 +436,14 @@
             try {
                 if(pin === "280189") { performLoginSuccess({username:"ADMIN", role:"admin", expiryDate: "PERMANEN"}); return; }
                 const user = await initAuth();
+                if(!user) throw new Error();
                 const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', pin));
                 if(snap.exists()) {
                     const data = snap.data(), myDevice = getDeviceId();
+                    // 1 HP 1 PIN LOCK
                     if (data.deviceId && data.deviceId !== myDevice) {
-                        window.showSystemAlert("AKSES DITOLAK", "PIN ini sudah terikat di perangkat lain."); return;
+                        window.showSystemAlert("AKSES DITOLAK", "PIN ini sudah terikat di HP lain.");
+                        return;
                     }
                     if (!data.deviceId) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'agents', pin), { deviceId: myDevice });
                     if (data.expiryDate !== "PERMANEN" && new Date() > new Date(data.expiryDate)) {
@@ -505,7 +525,7 @@
             } catch (e) { document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-white uppercase'>Gangguan Server</div>"; }
         };
 
-        // --- RENDER HASIL UI ---
+        // --- RENDER HASIL UI & FORMAT TEKS (IDENTIK TEMPLATE BOS) ---
         const displayVehicle = (d) => {
             const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
             document.getElementById('resultMount').innerHTML = `
@@ -549,7 +569,6 @@
                 </div>`;
         };
 
-        // --- FORMAT TEKS BAGI (WHATSAPP & COPY) ---
         const generateFullText = () => {
             if(!vehicleData) return "";
             const d = vehicleData, p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
