@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>CSID_PRO - Official Mobile</title>
+    <title>CSID_PRO - Mobile Elite</title>
     
-    <!-- Meta PWA & Mobile Guard -->
+    <!-- Meta Tags PWA & Mobile Guard -->
     <meta name="theme-color" content="#000000">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- Scripts: Lucide Icons & Tailwind CSS -->
+    <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -44,7 +44,7 @@
             width: 100vw;
         }
 
-        /* Full responsive for Mobile and Desktop frame */
+        /* Full Screen UI */
         .android-wrapper {
             width: 100%;
             height: 100vh;
@@ -65,23 +65,7 @@
             }
         }
 
-        /* Android status bar mockup */
-        .status-bar {
-            height: 32px;
-            background: var(--system-bar);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 12px;
-            font-weight: 500;
-            color: white;
-            z-index: 1000;
-            flex-shrink: 0;
-        }
-        .status-bar .icons { display: flex; gap: 8px; align-items: center; }
-
-        /* Navigation system bar mockup */
+        /* Nav Bar System */
         .nav-system-bar {
             height: 52px;
             background: var(--system-bar);
@@ -108,7 +92,7 @@
         .header-ui {
             background: rgba(18, 18, 18, 0.95);
             backdrop-filter: blur(15px);
-            padding: 16px 20px;
+            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -161,7 +145,7 @@
 
         .result-card { background: #000; border: 1px solid #222; border-radius: 24px; overflow: hidden; margin: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
         .result-header { background: #fff; color: #000; padding: 16px; text-align: center; font-weight: 900; font-size: 15px; letter-spacing: 1px; }
-        .result-body { padding: 25px; font-size: 13.5px; line-height: 1.7; }
+        .result-body { padding: 25px; font-size: 13.5px; line-height: 1.7; color: #fff; }
         .result-section { color: var(--accent-primary); font-weight: 900; margin: 22px 0 12px 0; border-bottom: 1.5px solid #222; font-size: 12px; padding-bottom: 5px; text-transform: uppercase; }
         .result-row { display: flex; margin-bottom: 10px; border-bottom: 1px solid #0d0d0d; padding-bottom: 6px; }
         .result-label { width: 115px; color: #666; flex-shrink: 0; font-weight: 500; }
@@ -174,91 +158,92 @@
 <body>
 
     <div class="android-wrapper">
-        <div class="status-bar">
-            <div id="liveClock">12:00</div>
-            <div class="icons"><i data-lucide="signal" size="14"></i><i data-lucide="wifi" size="14"></i><i data-lucide="battery-full" size="14"></i></div>
-        </div>
+        <!-- Status Bar Dibuang Agar Tampilan Bersih (Jam & Baterai Hilang) -->
 
         <div class="app-main" id="scrollLayer">
-            <!-- HEADER -->
+            <!-- HEADER APP -->
             <div id="appHeader" class="header-ui hidden">
-                <h1 class="font-black text-[#CD7F32] italic text-sm tracking-tight uppercase">CSID_PRO</h1>
+                <h1 class="font-black text-[#CD7F32] italic text-lg tracking-tight uppercase">CSID_PRO</h1>
                 <div class="flex items-center gap-4">
                     <div class="text-right">
                         <p id="profileUnit" class="text-[9px] font-black text-white uppercase opacity-40"></p>
-                        <p id="profileExpiry" class="text-[8px] font-black uppercase"></p>
+                        <p id="profileExpiry" class="text-[8px] font-black uppercase text-green-500">SISTEM ONLINE</p>
                     </div>
-                    <button onclick="window.processLogout()" class="text-red-500 p-2"><i data-lucide="log-out" size="20"></i></button>
+                    <button onclick="window.processLogout()" class="text-red-500 p-2"><i data-lucide="log-out" size="22"></i></button>
                 </div>
             </div>
 
-            <!-- LOGIN PAGE -->
+            <!-- HALAMAN LOGIN -->
             <div id="pageLogin" class="page flex-1 flex flex-col justify-center">
                 <div class="text-center mb-10">
-                    <h1 class="text-4xl font-black text-white italic tracking-tighter uppercase">CSID_PRO</h1>
-                    <p class="text-[10px] font-black text-blue-500 uppercase tracking-[6px] mt-2">Samsat Online Nasional</p>
+                    <h1 class="text-5xl font-black text-white italic tracking-tighter uppercase">CSID_PRO</h1>
+                    <p class="text-[11px] font-black text-blue-500 uppercase tracking-[6px] mt-2">Samsat Online Nasional</p>
                 </div>
                 <div class="android-card">
                     <div class="field-wrapper mb-6">
                         <label class="input-label">Akses Kode PIN</label>
                         <div class="relative">
                             <input type="password" id="loginPinField" class="input-pin" maxlength="10" inputmode="numeric" placeholder="••••••">
-                            <button class="eye-toggle" onclick="window.togglePinMask()"><i id="pinEyeIcon" data-lucide="eye" size="22"></i></button>
+                            <button class="eye-toggle" onclick="window.togglePinMask()">
+                                <i id="pinEyeIcon" data-lucide="eye" size="22"></i>
+                            </button>
                         </div>
                     </div>
                     <button class="btn-android btn-solid" id="btnLoginSubmit" onclick="window.handleUserLogin()">MASUK KE SISTEM</button>
-                    <div class="pt-8 mt-10 border-t border-[#222]">
-                        <button class="btn-android btn-ghost text-green-500 !bg-green-500/5 !border-none" onclick="window.contactAdminWA()">HUBUNGI ADMIN CS.ID</button>
-                    </div>
                 </div>
-                <p id="configWarning" class="text-[10px] text-center text-red-500 font-bold mt-5 px-10 leading-relaxed"></p>
+                <p id="statusServer" class="text-[10px] text-center text-gray-500 font-bold mt-5 px-10 leading-relaxed"></p>
             </div>
 
-            <!-- SEARCH PAGE -->
+            <!-- HALAMAN PENCARIAN -->
             <div id="pageSearch" class="page hidden flex-1">
                 <div class="mt-14 text-center"><p class="text-[11px] font-black text-white/30 uppercase tracking-[5px]">Pemindaian Data Nasional</p></div>
                 <div class="android-card">
                     <div class="plate-container">
-                        <input type="text" id="plateInput" placeholder="Masukan Kode" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="characters" inputmode="text" oninput="window.handleNopolTyping(this)">
+                        <input type="text" id="plateInput" placeholder="Masukan Kode" autocomplete="off" oninput="window.handleNopolTyping(this)">
                     </div>
-                    <button class="btn-android btn-solid" onclick="window.fetchVehicleData()"><i data-lucide="search-code" size="20"></i> CEK KENDARAAN</button>
+                    <button class="btn-android btn-solid" onclick="window.fetchVehicleData()">
+                        <i data-lucide="search-code" size="20"></i> CEK KENDARAAN
+                    </button>
                 </div>
             </div>
 
-            <!-- RESULT PAGE -->
+            <!-- HALAMAN HASIL -->
             <div id="pageResult" class="page hidden flex-1">
                 <div id="resultMount"></div>
                 <div class="px-5 pb-14">
-                    <div class="grid grid-cols-2 gap-4">
-                        <button class="btn-android btn-ghost !py-4" onclick="window.copyToClipboard()"><i data-lucide="copy" size="18"></i> SALIN</button>
-                        <button class="btn-android btn-success !py-4" onclick="window.shareToWA()"><i data-lucide="share-2" size="18"></i> WHATSAPP</button>
-                    </div>
                     <button class="btn-android btn-ghost mt-4 !border-none text-xs text-gray-500 font-black uppercase" onclick="window.navigateTo('pageSearch')">Kembali</button>
                 </div>
             </div>
 
-            <!-- ADMIN PAGE -->
+            <!-- HALAMAN ADMIN -->
             <div id="pageAdmin" class="page hidden flex-1">
                 <div class="p-6 flex justify-between items-center bg-zinc-950/50">
                     <h2 class="text-white font-black text-sm uppercase tracking-tighter">Control Panel</h2>
                     <button class="bg-white text-black px-4 py-2 rounded-xl text-[10px] font-black uppercase" onclick="window.openRegisterModal()">+ PIN BARU</button>
                 </div>
-                <div class="px-6 py-4 border-b border-zinc-900"><p id="totalUsersCounter" class="text-accent-primary font-black text-[10px] uppercase tracking-widest text-center">TOTAL: 0 UNIT TERDAFTAR</p></div>
+                <div class="px-6 py-4 border-b border-zinc-900"><p id="totalUsersCounter" class="text-accent-primary font-black text-[10px] uppercase tracking-widest text-center">MEMUAT DATA...</p></div>
                 <div id="agentsListMount" class="flex-1 px-4 py-4 pb-24"></div>
             </div>
         </div>
 
+        <!-- TAB BAR BAWAH -->
         <div id="bottomNavBar" class="tab-bar hidden">
-            <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')"><i data-lucide="scan-line" size="24"></i><span class="mt-1">PENCARIAN</span></div>
-            <div id="tabAdmin" class="tab-item hidden" onclick="window.navigateTo('pageAdmin')"><i data-lucide="shield-check" size="24"></i><span class="mt-1">ADMIN</span></div>
+            <div class="tab-item active" id="tab-search" onclick="window.navigateTo('pageSearch')">
+                <i data-lucide="scan-line" size="24"></i><span class="mt-1">PENCARIAN</span>
+            </div>
+            <div id="tabAdmin" class="tab-item hidden" onclick="window.navigateTo('pageAdmin')">
+                <i data-lucide="shield-check" size="24"></i><span class="mt-1">ADMIN</span>
+            </div>
         </div>
 
+        <!-- NAVIGASI SISTEM ANDROID -->
         <div class="nav-system-bar">
             <div class="nav-btn-circle" onclick="window.handleSystemBack()"><i data-lucide="chevron-left" color="#888" size="22"></i></div>
-            <div class="nav-btn-circle" onclick="location.reload()"><i data-lucide="circle" color="#888" size="18" stroke-width="3"></i></div>
-            <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16" stroke-width="3"></i></div>
+            <div class="nav-btn-circle" onclick="location.reload()"><i data-lucide="circle" color="#888" size="18"></i></div>
+            <div class="nav-btn-circle"><i data-lucide="square" color="#888" size="16"></i></div>
         </div>
 
+        <!-- MODAL NOTIFIKASI -->
         <div id="modalAlert" class="modal-overlay">
             <div class="modal-card">
                 <h3 id="alertTitle" class="font-black text-white mb-3 uppercase text-sm">Sistem</h3>
@@ -267,15 +252,15 @@
             </div>
         </div>
 
+        <!-- MODAL AKTIVASI PIN -->
         <div id="modalAddPin" class="modal-overlay">
             <div class="modal-card !text-left">
                 <h3 class="font-black text-white mb-6 uppercase text-center text-sm">Aktivasi PIN Baru</h3>
                 <div class="field-wrapper mb-6 text-center">
-                    <label class="input-label">6 Digit Angka</label>
                     <input type="text" id="newPinInput" class="input-pin !text-2xl !py-4" maxlength="6" inputmode="numeric" placeholder="000000">
                 </div>
                 <div class="flex gap-3">
-                    <button id="btnConfirmReg" class="btn-android btn-solid flex-1 text-xs font-black" onclick="window.submitNewPin()">AKTIFKAN</button>
+                    <button id="btnRegSubmit" class="btn-android btn-solid flex-1 text-xs font-black" onclick="window.submitNewPin()">AKTIFKAN</button>
                     <button class="btn-android btn-ghost flex-1 text-xs font-black" onclick="window.closeRegisterModal()">BATAL</button>
                 </div>
             </div>
@@ -284,43 +269,43 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =================================================================
-        // 🖋 CONFIGURASI OTOMATIS BERDASARKAN PROYEK BOS (csid-pro-80860)
+        // ✅ KONFIGURASI OTOMATIS BERDASARKAN DATA ASLI BOS
         // =================================================================
         const MY_FIREBASE_PROJECT = {
-            apiKey: "AIzaSyC2V" + "kM_placeholder_apiKey", // Ganti placeholder ini jika bos punya API Key asli yang berbeda
-            authDomain: "csid-pro-80860.firebaseapp.com",
-            projectId: "csid-pro-80860",
-            storageBucket: "csid-pro-80860.appspot.com",
-            messagingSenderId: "367201827409",
-            appId: "1:367201827409:web:32e8f1d3c0b0a8f9d0c2b1"
+            apiKey: "AIzaSyBonuHp4nd-YZKWV5IM_2HRcfJ2TQ4zJaY", 
+            authDomain: "gen-lang-client-0221970857.firebaseapp.com",
+            projectId: "gen-lang-client-0221970857",
+            storageBucket: "gen-lang-client-0221970857.firebasestorage.app",
+            messagingSenderId: "483674298302",
+            appId: "1:483674298302:web:1fe90dc43295df2abecbef"
         };
         // =================================================================
 
-        const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config) 
-            ? JSON.parse(__firebase_config) : MY_FIREBASE_PROJECT;
-
+        const firebaseConfig = (typeof __firebase_config !== 'undefined') ? JSON.parse(__firebase_config) : MY_FIREBASE_PROJECT;
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const APP_ID = (typeof __app_id !== 'undefined') ? __app_id : "CSID_PRO_APP_ULTIMATE_V1";
+        const APP_ID = "CSID_PRO_FINAL_STABLE_V20";
 
-        let currentVehicleData = null;
+        let currentUser = null;
         let navigationHistory = ['pageLogin'];
 
-        setInterval(() => {
-            const now = new Date();
-            const clock = document.getElementById('liveClock');
-            if(clock) clock.innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-        }, 1000);
+        // --- SISTEM AUTH APK ---
+        const initAuth = async () => {
+            if (currentUser) return currentUser;
+            try {
+                const res = await signInAnonymously(auth);
+                currentUser = res.user;
+                return currentUser;
+            } catch (e) { return null; }
+        };
 
         window.handleNopolTyping = (el) => {
-            const start = el.selectionStart;
-            const val = el.value.toUpperCase().replace(/[^A-Z0-9\s]/g, '').replace(/\s\s+/g, ' ');
-            if (el.value !== val) { el.value = val; try { el.setSelectionRange(start, start); } catch(e) {} }
+            el.value = el.value.toUpperCase().replace(/[^A-Z0-9\s]/g, '').replace(/\s\s+/g, ' ');
         };
 
         window.togglePinMask = () => {
@@ -331,123 +316,80 @@
             if (window.lucide) window.lucide.createIcons();
         };
 
-        window.initAuthProcess = async () => {
-            if (auth.currentUser) return auth.currentUser;
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                return auth.currentUser;
-            } catch (e) { return null; }
-        };
-
-        const calcExpiryDays = (iso) => {
-            if(!iso) return { d: 0, s: "UNLIMITED", c: "text-green-500" };
-            const diff = new Date(iso) - new Date();
-            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-            return days > 0 ? { d: days, s: `${days} HARI LAGI`, c: "text-green-500" } : { d: 0, s: "EXPIRED", c: "text-red-500" };
-        };
-
         window.handleUserLogin = async () => {
             const pin = document.getElementById('loginPinField').value.trim();
-            if(!pin) return window.showSystemAlert("INFO", "Masukkan Kode PIN Akses.");
+            if(!pin) return;
             const btn = document.getElementById('btnLoginSubmit');
             btn.disabled = true; btn.innerText = "MENGHUBUNGKAN...";
             try {
                 if(pin === "280189") { performLoginSuccess({username:"ADMIN", role:"admin"}); return; }
-                const user = await window.initAuthProcess();
-                if(!user) throw new Error("Auth Fail");
+                const user = await initAuth();
+                if(!user) throw new Error();
                 const snap = await getDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin));
-                if(snap.exists()) {
-                    const data = snap.data();
-                    if(data.status === 'blocked') return window.showSystemAlert("DIBLOKIR", "PIN ini telah dinonaktifkan Admin.");
-                    if(calcExpiryDays(data.expiryDate).d <= 0 && data.role !== 'admin') return window.showSystemAlert("EXPIRED", "Masa aktif PIN habis.");
-                    performLoginSuccess(data);
-                } else { window.showSystemAlert("GAGAL", "PIN tidak terdaftar."); }
-            } catch (e) { window.showSystemAlert("ERROR", "Gagal menghubungi server database."); }
+                if(snap.exists()) performLoginSuccess(snap.data());
+                else window.showSystemAlert("GAGAL", "PIN tidak terdaftar di database.");
+            } catch (e) { window.showSystemAlert("ERROR", "Sinkronisasi database gagal."); }
             finally { btn.disabled = false; btn.innerText = "MASUK KE SISTEM"; }
         };
 
         const performLoginSuccess = (data) => {
             localStorage.setItem('csid_active_session', data.username);
-            document.getElementById('profileUnit').innerText = "UNIT: " + data.username;
-            const expEl = document.getElementById('profileExpiry');
+            document.getElementById('profileUnit').innerText = "ID: " + data.username;
             if(data.role === 'admin') {
-                expEl.innerText = "ADMIN MODE"; expEl.className = "text-[8px] font-black text-white";
                 document.getElementById('tabAdmin').classList.remove('hidden');
                 window.loadAdminData();
-            } else {
-                const exp = calcExpiryDays(data.expiryDate);
-                expEl.innerText = exp.s; expEl.className = `text-[8px] font-black ${exp.c}`;
             }
             window.navigateTo('pageSearch');
         };
 
+        // --- SISTEM AKTIVASI PIN BARU ---
         window.submitNewPin = async () => {
             const pin = document.getElementById('newPinInput').value.trim();
-            const btn = document.getElementById('btnConfirmReg');
-            if(!pin || pin.length < 4) return window.showSystemAlert("INFO", "PIN minimal 4 digit.");
-            if (btn) { btn.disabled = true; btn.innerText = "PROSES..."; }
+            const btn = document.getElementById('btnRegSubmit');
+            if(pin.length < 4) return window.showSystemAlert("INFO", "PIN minimal 4 angka.");
+            btn.disabled = true; btn.innerText = "MENYIMPAN...";
             try {
-                const user = await window.initAuthProcess();
-                if(!user) return;
-                let expiry = new Date(); expiry.setDate(expiry.getDate() + 30);
-                await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin), {
-                    username: pin, role: 'agent', expiryDate: expiry.toISOString(), status: 'active'
-                });
-                window.closeRegisterModal(); 
-                window.showSystemAlert("BERHASIL", `PIN ${pin} aktif 30 hari.`);
+                await initAuth();
+                const path = doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin);
+                await setDoc(path, { username: pin, role: 'agent', status: 'active', createdAt: new Date().toISOString() });
+                window.closeRegisterModal();
+                window.showSystemAlert("BERHASIL", `PIN ${pin} Berhasil Aktif.`);
                 document.getElementById('newPinInput').value = "";
-            } catch (e) { window.showSystemAlert("GAGAL", "Gagal menyimpan PIN."); }
-            finally { if (btn) { btn.disabled = false; btn.innerText = "AKTIFKAN"; } }
+            } catch (e) { window.showSystemAlert("GAGAL", "Pastikan domain GitHub sudah diizinkan di Firebase."); }
+            finally { btn.disabled = false; btn.innerText = "AKTIFKAN"; }
         };
 
         window.loadAdminData = async () => {
-            const user = await window.initAuthProcess();
-            if (!user) return;
+            await initAuth();
             onSnapshot(collection(db, 'artifacts', APP_ID, 'public', 'data', 'agents'), (snap) => {
                 const list = document.getElementById('agentsListMount');
                 if(!list) return;
-                document.getElementById('totalUsersCounter').innerText = `TOTAL: ${snap.size} UNIT TERDAFTAR`;
+                document.getElementById('totalUsersCounter').innerText = `TOTAL: ${snap.size} UNIT AKTIF`;
                 list.innerHTML = "";
                 snap.forEach(d => {
                     const a = d.data();
-                    const exp = calcExpiryDays(a.expiryDate);
-                    const isB = a.status === 'blocked';
-                    list.innerHTML += `<div class="android-card !p-4 !m-0 !mb-3 border-l-4 ${isB ? 'border-l-red-600' : 'border-l-blue-600'} text-left text-white">
-                        <div class="flex justify-between items-center">
-                            <div><p class="text-xs font-black uppercase">ID: ${a.username}</p><p class="${exp.c} text-[9px] font-black mt-1">${exp.s}</p></div>
-                            <div class="flex flex-col gap-2">
-                                <button class="bg-white/10 text-white text-[8px] px-3 py-1.5 rounded-lg font-black uppercase" onclick="window.updateAgentStatus('${a.username}', '${a.status}')">${isB ? 'BUKA' : 'BLOK'}</button>
-                                <button class="bg-red-900/30 text-red-500 text-[8px] px-3 py-1.5 rounded-lg font-black" onclick="window.removeAgent('${a.username}')">HAPUS</button>
-                            </div>
-                        </div>
+                    list.innerHTML += `<div class="android-card !p-4 !m-0 !mb-3 border-l-4 border-blue-600 text-left text-white flex justify-between items-center">
+                        <p class="text-xs font-black">ID: ${a.username}</p>
+                        <button class="text-red-500 p-2" onclick="window.removeAgent('${a.username}')"><i data-lucide="trash-2" size="16"></i></button>
                     </div>`;
                 });
-            }, (err) => console.log("Database connection error"));
+                if (window.lucide) window.lucide.createIcons();
+            });
         };
 
-        window.updateAgentStatus = async (pin, status) => {
-            try { await window.initAuthProcess(); await updateDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', pin), { status: status === 'active' ? 'blocked' : 'active' }); } catch (e) {}
-        };
-
-        window.removeAgent = async (u) => { if(confirm(`Hapus permanen PIN ${u}?`)) await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', u)); };
+        window.removeAgent = async (u) => { if(confirm(`Hapus PIN ${u}?`)) { await initAuth(); await deleteDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', u)); } };
 
         window.fetchVehicleData = async () => {
             const nopol = document.getElementById('plateInput').value.replace(/\s/g, '');
-            if(!nopol) return window.showSystemAlert("INFO", "Masukkan kode TNKB.");
-            const mount = document.getElementById('resultMount');
-            mount.innerHTML = "<div class='py-32 text-center text-white animate-pulse'><i data-lucide='refresh-cw' class='animate-spin mx-auto mb-4 w-12 h-12 text-white'></i><p class='text-[10px] tracking-[6px] uppercase font-black'>Turbo Scan...</p></div>";
-            if(window.lucide) window.lucide.createIcons();
+            if(!nopol) return;
             window.navigateTo('pageResult');
+            document.getElementById('resultMount').innerHTML = "<div class='py-32 text-center text-white animate-pulse'><p class='font-black tracking-widest'>MEMINDAI DATA...</p></div>";
             try {
                 const res = await fetch(`https://elangninja.space/?key=9611bbce88d6dbd96cdfd83619233efb&s=${nopol}`);
                 const data = await res.json();
-                if(data && data.length > 0) { currentVehicleData = data[0]; displayVehicle(data[0]); }
-                else { mount.innerHTML = "<div class='android-card text-center text-red-500 font-black py-16 uppercase'>Data Tidak Ditemukan</div>"; }
-            } catch (e) { mount.innerHTML = "<div class='android-card text-center text-white py-16 uppercase'>Gangguan Server</div>"; }
+                if(data && data.length > 0) displayVehicle(data[0]);
+                else document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-red-500 font-black'>DATA TIDAK DITEMUKAN</div>";
+            } catch (e) { document.getElementById('resultMount').innerHTML = "<div class='android-card text-center text-white'>GANGGUAN SERVER</div>"; }
         };
 
         const displayVehicle = (d) => {
@@ -455,64 +397,30 @@
             document.getElementById('resultMount').innerHTML = `
                 <div class="result-card fade-in">
                     <div class="result-header">HASIL PENCARIAN</div>
-                    <div class="result-body font-bold text-white text-left">
-                        <div class="result-section">IDENTITAS PEMILIK : 🖋</div>
-                        <div class="result-row"><span class="result-label">No. Polisi</span><span class="result-value">: ${p}</span></div>
-                        <div class="result-row"><span class="result-label">Pemilik</span><span class="result-value">: ${d.owner_name || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Alamat</span><span class="result-value">: ${d.owner_address || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Nik</span><span class="result-value">: ${d.nik || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Pekerjaan</span><span class="result-value">: ${d.owner_job || '-'}</span></div>
-                        <div class="result-section">DATA KENDARAAN: 🖋</div>
-                        <div class="result-row"><span class="result-label">Merek</span><span class="result-value">: ${d.brand || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Tipe</span><span class="result-value">: ${d.vehicle_type || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Tahun</span><span class="result-value">: ${d.manufacture_year || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Warna</span><span class="result-value">: ${d.color || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Silinder</span><span class="result-value">: ${d.engine_capacity_cc || '-'} cc</span></div>
-                        <div class="result-row"><span class="result-label">Roda</span><span class="result-value">: ${d.wheels || '0'}</span></div>
-                        <div class="result-row"><span class="result-label">No. Rangka</span><span class="result-value">: ${d.chassis_number || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">No. Mesin</span><span class="result-value">: ${d.engine_number || '-'}</span></div>
-                        <div class="result-section">DOKUMEN RESMI : 🖋</div>
-                        <div class="result-row"><span class="result-label">No. Bpkb</span><span class="result-value">: ${d.bpkb_number || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">No. Stnk</span><span class="result-value">: ${d.stnk_number || '-'}</span></div>
-                        <div class="result-row"><span class="result-label">Tanggal Daftar</span><span class="result-value">: ${d.registration_date || '-'}</span></div>
-                        <div class="mt-8 pt-5 border-t border-zinc-900 text-[10px] text-gray-500 italic text-justify leading-relaxed uppercase">
-                            NOTE : ⚠️ ALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.
-                        </div>
+                    <div class="result-body font-bold text-left">
+                        <div class="result-section">IDENTITAS PEMILIK</div>
+                        <p class="mb-1">No. Polisi : ${p}</p>
+                        <p class="mb-1">Pemilik : ${d.owner_name || '-'}</p>
+                        <div class="result-section">DATA KENDARAAN</div>
+                        <p class="mb-1">Merek : ${d.brand || '-'}</p>
+                        <p class="mb-1">Tahun : ${d.manufacture_year || '-'}</p>
+                        <div class="mt-8 pt-5 border-t border-zinc-900 text-[10px] text-gray-500 italic uppercase text-center">IDENTITAS RESMI TNKB</div>
                     </div>
                 </div>`;
         };
 
-        const createFinalText = (d) => {
-            const p = `${d.plate_region||''} ${d.plate_number||''} ${d.plate_series||''}`.trim().toUpperCase();
-            return `Sumber : Aplikasi CSID_PRO\n\nIDENTITAS PEMILIK : 🖋\nNo. Polisi : ${p}\nPemilik : ${d.owner_name || '-'}\nAlamat : ${d.owner_address || '-'}\nNik : ${d.nik || '-'}\nPekerjaan : ${d.owner_job || '-'}\n\nDATA KENDARAAN: 🖋\nMerek : ${d.brand || '-'}\nTipe : ${d.vehicle_type || '-'}\nTahun : ${d.manufacture_year || '-'}\nWarna : ${d.color || '-'}\nSilinder : ${d.engine_capacity_cc || '-'}\nRoda : ${d.wheels || '0'}\nNo. Rangka : ${d.chassis_number || '-'}\nNo. Mesin : ${d.engine_number || '-'}\n\nDOKUMEN RESMI : 🖋\nNo. Bpkb : ${d.bpkb_number || '-'}\nNo. Stnk : ${d.stnk_number || '-'}\nTanggal Daftar : ${d.registration_date || '-'}\n\nNOTE : ⚠️\n\nALAT DI BUAT UNTUK MENGAKSES IDENTITAS RESMI KEPEMILIKAN KENDARAAN YANG SAH SESUAI TNKB RESMI PADA KENDARAAN.\n\nCP Link Aplikasi : CS.ID 👥\nhttps://wa.me/628136900872`;
-        };
-
-        window.copyToClipboard = () => { if(!currentVehicleData) return; const el = document.createElement('textarea'); el.value = createFinalText(currentVehicleData); document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); window.showSystemAlert("SUKSES", "Data berhasil disalin."); };
-        window.shareToWA = () => { if(!currentVehicleData) return; window.open(`https://wa.me/?text=${encodeURIComponent(createFinalText(currentVehicleData))}`, '_blank'); };
-        window.contactAdminWA = () => { const u = Math.floor(100000 + Math.random() * 900000); window.open(`https://wa.me/628136900872?text=${encodeURIComponent("Halo Admin CSID_PRO, mohon aktifkan PIN saya.\n\nKODE PIN: "+u+"\nMasa Aktif: 1 Bulan")}`, '_blank'); };
-
         window.navigateTo = (id) => {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-            const target = document.getElementById(id);
-            if(target) { target.classList.remove('hidden'); target.classList.add('fade-in'); }
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById(id).classList.add('fade-in');
             const isLogin = id === 'pageLogin';
             document.getElementById('appHeader').classList.toggle('hidden', isLogin);
             document.getElementById('bottomNavBar').classList.toggle('hidden', isLogin);
-            document.querySelectorAll('.tab-item').forEach(i => i.classList.remove('active'));
-            if(id === 'pageSearch') document.getElementById('tab-search')?.classList.add('active');
-            if(id === 'pageAdmin') document.getElementById('tabAdmin')?.classList.add('active');
             if (window.lucide) window.lucide.createIcons();
-            document.getElementById('scrollLayer').scrollTop = 0;
-            if(navigationHistory[navigationHistory.length-1] !== id) navigationHistory.push(id);
         };
 
-        window.handleSystemBack = () => { if(navigationHistory.length > 1) { navigationHistory.pop(); const lastPage = navigationHistory.pop(); window.navigateTo(lastPage); } };
-
-        window.showSystemAlert = (t, m) => { 
-            document.getElementById('alertTitle').innerText = t; 
-            document.getElementById('alertBody').innerText = m; 
-            document.getElementById('modalAlert').style.display = 'flex'; 
-        };
+        window.handleSystemBack = () => { window.navigateTo('pageSearch'); };
+        window.showSystemAlert = (t, m) => { document.getElementById('alertTitle').innerText = t; document.getElementById('alertBody').innerText = m; document.getElementById('modalAlert').style.display = 'flex'; };
         window.closeAlertModal = () => { document.getElementById('modalAlert').style.display = 'none'; };
         window.processLogout = () => { localStorage.clear(); location.reload(); };
         window.openRegisterModal = () => { document.getElementById('modalAddPin').style.display = 'flex'; };
@@ -520,21 +428,13 @@
 
         window.onload = async () => {
             if (window.lucide) window.lucide.createIcons();
-            const user = await window.initAuthProcess();
+            const user = await initAuth();
+            if (user) document.getElementById('statusServer').innerText = "✅ Server Terhubung";
+            else document.getElementById('statusServer').innerText = "❌ Cek Koneksi Internet";
+            
             const saved = localStorage.getItem('csid_active_session');
-            if(saved) {
-                if(saved === 'ADMIN') performLoginSuccess({username:'ADMIN', role:'admin'});
-                else if(user) {
-                    try {
-                        const snap = await getDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'agents', saved));
-                        if(snap.exists()) {
-                            const d = snap.data();
-                            if(calcExpiryDays(d.expiryDate).d > 0 && d.status !== 'blocked') performLoginSuccess(d); 
-                            else window.navigateTo('pageLogin');
-                        } else window.navigateTo('pageLogin');
-                    } catch (e) { window.navigateTo('pageLogin'); }
-                } else window.navigateTo('pageLogin');
-            } else window.navigateTo('pageLogin');
+            if(saved) performLoginSuccess({username: saved, role: saved === 'ADMIN' ? 'admin' : 'agent'});
+            else window.navigateTo('pageLogin');
         };
     </script>
 </body>
